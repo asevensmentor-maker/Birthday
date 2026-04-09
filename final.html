@@ -20,47 +20,35 @@ body {
   bottom:100px;
 }
 
-/* YOUR AVATAR */
-#you {
-  left:-200px;
-  animation: walkIn 4s forwards;
-}
-
-/* GF AVATAR */
-#gf {
-  right:-200px;
-  display:none;
-}
-
-/* STITCH */
-#stitch {
-  left:20%;
-  animation: dance1 0.6s infinite alternate;
-}
-
-/* DANCERS */
-.dancer {
-  width:100px;
-  position:absolute;
-  bottom:100px;
-}
-
-/* DIFFERENT SPEEDS */
-.d1 { animation: dance1 0.4s infinite alternate; }
-.d2 { animation: dance2 0.6s infinite alternate; }
-.d3 { animation: dance3 0.5s infinite alternate; }
-.d4 { animation: dance2 0.7s infinite alternate; }
+/* WALK */
+#you { left:-200px; animation: walkYou 4s forwards; }
+#gf { right:-200px; display:none; animation: walkGF 4s forwards; }
 
 /* CAKE */
 #cake {
-  width:150px;
-  margin-top:80px;
-  transition: transform 0.5s;
+  width:200px;
+  margin-top:100px;
+  display:none;
+  transition: all 0.5s;
 }
 
-/* CAKE CUT */
-.cut {
-  transform: rotate(-10deg) scale(0.9);
+/* CANDLE */
+#candle {
+  position:absolute;
+  top:120px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:30px;
+}
+
+/* BLOW EFFECT */
+.blown {
+  opacity:0;
+}
+
+/* SLICE */
+.slice {
+  transform: rotate(-15deg) scale(0.9);
 }
 
 /* BUTTON */
@@ -73,27 +61,20 @@ button {
   cursor:pointer;
 }
 
-/* ANIMATIONS */
-@keyframes walkIn {
-  to { left:40%; }
+/* WISH BOX */
+#wishBox {
+  display:none;
+  margin-top:20px;
 }
 
-@keyframes dance1 {
-  from { transform: rotate(-6deg) translateY(0); }
-  to { transform: rotate(6deg) translateY(-10px); }
+input {
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  width:200px;
 }
 
-@keyframes dance2 {
-  from { transform: rotate(-4deg) translateY(0); }
-  to { transform: rotate(4deg) translateY(-15px); }
-}
-
-@keyframes dance3 {
-  from { transform: rotate(-8deg) translateY(0); }
-  to { transform: rotate(8deg) translateY(-8px); }
-}
-
-/* HEART */
+/* HEARTS */
 .heart {
   position:absolute;
   font-size:20px;
@@ -104,6 +85,10 @@ button {
   0% { transform: translateY(0); opacity:1; }
   100% { transform: translateY(-200px); opacity:0; }
 }
+
+/* WALK ANIMATIONS */
+@keyframes walkYou { to { left:30%; } }
+@keyframes walkGF { to { right:30%; } }
 </style>
 
 </head>
@@ -112,33 +97,34 @@ button {
 
 <h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
 
-<!-- MUSIC -->
 <audio autoplay loop>
-  <source src="birthday.mp3" type="audio/mpeg">
+  <source src="birthday.mp3">
 </audio>
 
-<!-- YOUR AVATAR -->
+<!-- AVATARS -->
 <img id="you" src="standing.png" class="avatar">
-
-<!-- GF AVATAR -->
 <img id="gf" src="gf.png" class="avatar">
-
-<!-- STITCH -->
-<img id="stitch" src="stitch.png" class="avatar">
-
-<!-- DANCERS -->
-<img src="dancing.png" class="dancer d1" style="left:5%">
-<img src="dancing.png" class="dancer d2" style="left:25%">
-<img src="dancing.png" class="dancer d3" style="left:65%">
-<img src="dancing.png" class="dancer d4" style="left:85%">
 
 <!-- CAKE -->
 <img id="cake" src="cake.png">
+<div id="candle">🕯️</div>
 
 <br>
 
-<button onclick="blowCandle()">Blow Candle 🕯️</button>
-<button onclick="cutCake()">Cut Cake 🎂</button>
+<button id="blowBtn" onclick="blowCandle()" style="display:none;">
+  Blow Candle 🕯️
+</button>
+
+<div id="wishBox">
+  <p>Make a wish 💖</p>
+  <input type="text" id="wishInput" placeholder="Type your wish...">
+  <br>
+  <button onclick="saveWish()">Done ✨</button>
+</div>
+
+<button id="cutBtn" onclick="cutCake()" style="display:none;">
+  Cut Cake 🎂
+</button>
 
 <p id="msg"></p>
 
@@ -149,14 +135,36 @@ setTimeout(()=>{
   document.getElementById("gf").style.display = "block";
 },4000);
 
+// Show cake
+setTimeout(()=>{
+  document.getElementById("cake").style.display = "block";
+  document.getElementById("blowBtn").style.display = "inline-block";
+},7000);
+
+// BLOW CANDLE
 function blowCandle(){
+  document.getElementById("candle").classList.add("blown");
   document.getElementById("msg").innerText = "Make a wish 💖";
+
+  document.getElementById("wishBox").style.display = "block";
 }
 
+// SAVE WISH
+function saveWish(){
+  const wish = document.getElementById("wishInput").value;
+
+  document.getElementById("msg").innerText =
+    "Your wish: " + wish + " 💖";
+
+  document.getElementById("wishBox").style.display = "none";
+  document.getElementById("cutBtn").style.display = "inline-block";
+}
+
+// CUT CAKE
 function cutCake(){
 
   const cake = document.getElementById("cake");
-  cake.classList.add("cut");
+  cake.classList.add("slice");
 
   document.getElementById("msg").innerText =
     "Happy Birthday My Love ❤️🎂";
@@ -164,9 +172,9 @@ function cutCake(){
   celebrate();
 }
 
-/* HEART EXPLOSION */
+// HEART CELEBRATION
 function celebrate(){
-  for(let i=0;i<50;i++){
+  for(let i=0;i<70;i++){
     let heart = document.createElement("div");
     heart.innerHTML = "💖";
     heart.classList.add("heart");
