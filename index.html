@@ -5,14 +5,13 @@
 
 <style>
 body {
-  margin:0;
   background: linear-gradient(to right, #ff758c, #ff7eb3);
   color:white;
   text-align:center;
   font-family: Arial;
 }
 
-/* SCREEN */
+/* SCREENS */
 .screen { display:none; }
 .active { display:block; }
 
@@ -21,22 +20,28 @@ body {
   display:flex;
   justify-content:space-around;
   align-items:center;
-  margin-top:40px;
+  margin-top:50px;
 }
 
 /* CHARACTERS */
 .character {
-  width:180px;
-  transition: transform 0.2s;
+  width:160px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* ATTACK ANIMATION */
-.attack {
-  transform: translateX(40px) scale(1.1);
+/* MOVE CLOSE */
+.attack-move-left {
+  transform: translateX(120px);
 }
 
+.attack-move-right {
+  transform: translateX(-120px);
+}
+
+/* HIT EFFECT */
 .hit {
-  transform: translateX(-20px);
+  transform: scale(0.9);
 }
 
 /* HEALTH BAR */
@@ -60,8 +65,6 @@ button {
   border:none;
   border-radius:20px;
   margin:10px;
-  cursor:pointer;
-  font-size:16px;
 }
 </style>
 
@@ -72,49 +75,35 @@ button {
 <!-- SCREEN 1 -->
 <div id="screen1" class="active">
   <h1>Happy Birthday ❤️</h1>
-  <p>Are you ready for your surprise?</p>
-  <button onclick="go(2)">Yes 💖</button>
-  <button onmouseover="run(this)">No 😜</button>
+  <button onclick="go(2)">Start 💖</button>
 </div>
 
 <!-- SCREEN 2 -->
 <div id="screen2" class="screen">
-  <h2>Enter the Fight Arena 🎮</h2>
-  <button onclick="go(3)">Start Battle 💥</button>
-</div>
-
-<!-- SCREEN 3 GAME -->
-<div id="screen3" class="screen">
-
-  <h2>💖 Fight for Her Heart 💖</h2>
+  <h2>Fight Begins 🎮</h2>
 
   <div class="game">
 
     <!-- YOU -->
     <div>
       <img id="you" src="avatar.png" class="character">
-      <p>You</p>
       <div class="bar"><div id="youHP" class="hp" style="width:100%"></div></div>
     </div>
 
     <!-- STITCH -->
     <div>
       <img id="stitch" src="stitch.png" class="character">
-      <p>Stitch 🧸</p>
       <div class="bar"><div id="stitchHP" class="hp" style="width:100%"></div></div>
     </div>
 
   </div>
 
   <button onclick="attack()">Attack 👊</button>
-  <button onclick="power()">Power 💥</button>
-
 </div>
 
-<!-- SCREEN 4 -->
-<div id="screen4" class="screen">
-  <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
-  <p>But you are my everything 💖</p>
+<!-- WIN -->
+<div id="screen3" class="screen">
+  <h1>❤️ I AM YOUR FAVORITE ❤️</h1>
 </div>
 
 <script>
@@ -122,11 +111,6 @@ button {
 function go(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen'+n).classList.add('active');
-}
-
-function run(btn){
-  btn.style.position='absolute';
-  btn.style.left=Math.random()*300+'px';
 }
 
 let you = 100;
@@ -142,50 +126,25 @@ function attack(){
   const youChar = document.getElementById("you");
   const stitchChar = document.getElementById("stitch");
 
-  // animation
-  youChar.classList.add("attack");
+  // MOVE CLOSE
+  youChar.classList.add("attack-move-left");
+  stitchChar.classList.add("attack-move-right");
+
+  // HIT EFFECT
   stitchChar.classList.add("hit");
 
   setTimeout(()=>{
-    youChar.classList.remove("attack");
+    youChar.classList.remove("attack-move-left");
+    stitchChar.classList.remove("attack-move-right");
     stitchChar.classList.remove("hit");
-  },200);
+  },300);
 
-  // damage
-  stitch -= Math.floor(Math.random()*15)+10;
-  you -= Math.floor(Math.random()*10);
-
+  // DAMAGE
+  stitch -= 20;
   update();
-  check();
-}
 
-function power(){
-
-  const youChar = document.getElementById("you");
-  const stitchChar = document.getElementById("stitch");
-
-  youChar.classList.add("attack");
-  stitchChar.classList.add("hit");
-
-  setTimeout(()=>{
-    youChar.classList.remove("attack");
-    stitchChar.classList.remove("hit");
-  },200);
-
-  stitch -= Math.floor(Math.random()*25)+20;
-  you -= Math.floor(Math.random()*15);
-
-  update();
-  check();
-}
-
-function check(){
   if(stitch <= 0){
-    go(4);
-  }
-  if(you <= 0){
-    alert("Stitch wins 😅 Try again!");
-    location.reload();
+    go(3);
   }
 }
 
