@@ -1,25 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Love Game 💖</title>
+<title>Love Fight Game 💖</title>
 
 <style>
 body {
-  background: pink;
-  color: white;
-  text-align: center;
+  margin:0;
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color:white;
+  text-align:center;
   font-family: Arial;
 }
 
-.screen { display: none; }
-.active { display: block; }
+/* SCREEN */
+.screen { display:none; }
+.active { display:block; }
 
+/* GAME AREA */
+.game {
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  margin-top:40px;
+}
+
+/* CHARACTERS */
+.character {
+  width:180px;
+  transition: transform 0.2s;
+}
+
+/* ATTACK ANIMATION */
+.attack {
+  transform: translateX(40px) scale(1.1);
+}
+
+.hit {
+  transform: translateX(-20px);
+}
+
+/* HEALTH BAR */
+.bar {
+  width:150px;
+  height:15px;
+  background:white;
+  border-radius:10px;
+  margin:10px auto;
+}
+
+.hp {
+  height:100%;
+  background:red;
+  border-radius:10px;
+}
+
+/* BUTTON */
 button {
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  margin:10px;
+  cursor:pointer;
+  font-size:16px;
 }
 </style>
 
@@ -30,54 +72,120 @@ button {
 <!-- SCREEN 1 -->
 <div id="screen1" class="active">
   <h1>Happy Birthday ❤️</h1>
-  <p>Are you ready for surprise?</p>
-  <button onclick="goTo(2)">Yes 💖</button>
-  <button onmouseover="move(this)">No 😜</button>
+  <p>Are you ready for your surprise?</p>
+  <button onclick="go(2)">Yes 💖</button>
+  <button onmouseover="run(this)">No 😜</button>
 </div>
 
 <!-- SCREEN 2 -->
 <div id="screen2" class="screen">
-  <h2>Click Door 🚪</h2>
-  <img src="walk.png" width="150"><br><br>
-  <button onclick="goTo(3)">Open Door</button>
+  <h2>Enter the Fight Arena 🎮</h2>
+  <button onclick="go(3)">Start Battle 💥</button>
 </div>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 3 GAME -->
 <div id="screen3" class="screen">
-  <h2>Fight Stitch 🧸</h2>
-  <p>Health: <span id="hp">100</span></p>
+
+  <h2>💖 Fight for Her Heart 💖</h2>
+
+  <div class="game">
+
+    <!-- YOU -->
+    <div>
+      <img id="you" src="avatar.png" class="character">
+      <p>You</p>
+      <div class="bar"><div id="youHP" class="hp" style="width:100%"></div></div>
+    </div>
+
+    <!-- STITCH -->
+    <div>
+      <img id="stitch" src="stitch.png" class="character">
+      <p>Stitch 🧸</p>
+      <div class="bar"><div id="stitchHP" class="hp" style="width:100%"></div></div>
+    </div>
+
+  </div>
+
   <button onclick="attack()">Attack 👊</button>
+  <button onclick="power()">Power 💥</button>
+
 </div>
 
 <!-- SCREEN 4 -->
 <div id="screen4" class="screen">
-  <h1>❤️ I AM YOUR FAVORITE ❤️</h1>
+  <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
+  <p>But you are my everything 💖</p>
 </div>
 
 <script>
 
-let hp = 100;
-
-function goTo(num){
-  document.getElementById("screen1").classList.remove("active");
-  document.getElementById("screen2").classList.remove("active");
-  document.getElementById("screen3").classList.remove("active");
-  document.getElementById("screen4").classList.remove("active");
-
-  document.getElementById("screen"+num).classList.add("active");
+function go(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen'+n).classList.add('active');
 }
 
-function move(btn){
-  btn.style.position = "absolute";
-  btn.style.left = Math.random()*300 + "px";
+function run(btn){
+  btn.style.position='absolute';
+  btn.style.left=Math.random()*300+'px';
+}
+
+let you = 100;
+let stitch = 100;
+
+function update(){
+  document.getElementById("youHP").style.width = you + "%";
+  document.getElementById("stitchHP").style.width = stitch + "%";
 }
 
 function attack(){
-  hp -= 20;
-  document.getElementById("hp").innerText = hp;
 
-  if(hp <= 0){
-    goTo(4);
+  const youChar = document.getElementById("you");
+  const stitchChar = document.getElementById("stitch");
+
+  // animation
+  youChar.classList.add("attack");
+  stitchChar.classList.add("hit");
+
+  setTimeout(()=>{
+    youChar.classList.remove("attack");
+    stitchChar.classList.remove("hit");
+  },200);
+
+  // damage
+  stitch -= Math.floor(Math.random()*15)+10;
+  you -= Math.floor(Math.random()*10);
+
+  update();
+  check();
+}
+
+function power(){
+
+  const youChar = document.getElementById("you");
+  const stitchChar = document.getElementById("stitch");
+
+  youChar.classList.add("attack");
+  stitchChar.classList.add("hit");
+
+  setTimeout(()=>{
+    youChar.classList.remove("attack");
+    stitchChar.classList.remove("hit");
+  },200);
+
+  stitch -= Math.floor(Math.random()*25)+20;
+  you -= Math.floor(Math.random()*15);
+
+  update();
+  check();
+}
+
+function check(){
+  if(stitch <= 0){
+    go(4);
+  }
+  if(you <= 0){
+    alert("Stitch wins 😅 Try again!");
+    location.reload();
   }
 }
 
