@@ -50,31 +50,34 @@ body {
 <script>
 
 const photos = [
-  "photo1.jpg",
-  "photo2.jpg",
-  "photo3.jpg",
-  "photo4.jpg"
+  "photo1.jpg",  // where I met you
+  "photo2.jpg",  // we became close
+  "photo3.jpg",  // childhood innocence
+  "photo4.jpg"   // beautiful & strong
 ];
 
 const messages = [
-  "This day was one of the best days of my life ❤️",
-  "Your smile here made my world brighter 😍",
-  "Every moment with you feels special 💖",
-  "I wish I could relive this day forever 🥺"
+  "This is where I met you ❤️ This is where I got to know what a truly innocent soul you are… and how beautiful one person can be 💖",
+  
+  "This is where we became close ❤️ The best moment of my life… and I promise to stay here in the future too, just like this 🥺",
+  
+  "This image always reminds me of the innocent child inside you ❤️ The one I always want to protect and keep alive forever 💕",
+  
+  "This image shows how beautiful and strong you are ❤️ No matter what happens, you still stand there smiling… and that makes you even more special to me 💖"
 ];
 
 let index = 0;
-let charIndex = 0;
 
+/* TYPE TEXT */
 function typeText(text){
-  const msgEl = document.getElementById("message");
-  msgEl.innerHTML = "";
-  charIndex = 0;
+  const msg = document.getElementById("message");
+  msg.innerHTML = "";
+  let i = 0;
 
   function typing(){
-    if(charIndex < text.length){
-      msgEl.innerHTML += text.charAt(charIndex);
-      charIndex++;
+    if(i < text.length){
+      msg.innerHTML += text.charAt(i);
+      i++;
       setTimeout(typing, 40);
     }
   }
@@ -82,11 +85,12 @@ function typeText(text){
   typing();
 }
 
-function showNext(){
+/* SHOW NEXT */
+function nextSlide(){
 
   const img = document.getElementById("photo");
 
-  img.classList.add("fade");
+  img.style.opacity = 0;
 
   setTimeout(()=>{
 
@@ -98,26 +102,39 @@ function showNext(){
     }
 
     img.src = photos[index];
-    img.classList.remove("fade");
+    img.style.opacity = 1;
+    img.classList.add("zoom");
 
     typeText(messages[index]);
 
-  },1000);
+  },1500);
 }
 
-// INITIAL
+/* HEARTS */
+setInterval(()=>{
+  const heart = document.createElement("span");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random()*100+"vw";
+  document.getElementById("hearts").appendChild(heart);
+
+  setTimeout(()=>heart.remove(),6000);
+},400);
+
+/* INITIAL */
 typeText(messages[0]);
 
-// AUTO CHANGE EVERY 5 SEC
-setInterval(showNext, 5000);
+setInterval(nextSlide, 6000);
 
+/* FINAL SCREEN */
 function showFinal(){
   document.body.innerHTML = `
-    <h1>❤️ Best Memories With You ❤️</h1>
-    <p style="font-size:22px;">
-      Every moment with you is my favorite memory 💖<br><br>
-      I love you forever ❤️
-    </p>
+    <div style="margin-top:150px">
+      <h1>❤️ Best Memories With You ❤️</h1>
+      <p style="font-size:24px;">
+        Every moment with you is my favorite memory 💖<br><br>
+        I love you forever ❤️
+      </p>
+    </div>
   `;
 }
 
