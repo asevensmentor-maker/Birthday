@@ -2,44 +2,50 @@
 <html>
 <head>
 <title>Love Game 💖</title>
+
 <style>
-body { text-align:center; background:pink; color:white; font-family:Arial; }
-
-.screen { display:none; }
-.active { display:block; }
-
-button {
-  padding:10px 20px;
-  margin:10px;
-  border:none;
-  border-radius:20px;
+body {
+  background: pink;
+  color: white;
+  text-align: center;
+  font-family: Arial;
 }
 
-img { width:150px; }
+.screen { display: none; }
+.active { display: block; }
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
 </style>
+
 </head>
 
 <body>
 
 <!-- SCREEN 1 -->
-<div id="screen1" class="screen active">
+<div id="screen1" class="active">
   <h1>Happy Birthday ❤️</h1>
-  <p>Are you ready?</p>
-  <button onclick="next(2)">Yes 💖</button>
+  <p>Are you ready for surprise?</p>
+  <button onclick="goTo(2)">Yes 💖</button>
   <button onmouseover="move(this)">No 😜</button>
 </div>
 
 <!-- SCREEN 2 -->
 <div id="screen2" class="screen">
   <h2>Click Door 🚪</h2>
-  <img src="walk.png"><br>
-  <button onclick="next(3)">Open Door</button>
+  <img src="walk.png" width="150"><br><br>
+  <button onclick="goTo(3)">Open Door</button>
 </div>
 
-<!-- SCREEN 3 GAME -->
+<!-- SCREEN 3 -->
 <div id="screen3" class="screen">
-  <h2>Fight with Stitch 🧸</h2>
-  <p>Stitch Health: <span id="hp">100</span></p>
+  <h2>Fight Stitch 🧸</h2>
+  <p>Health: <span id="hp">100</span></p>
   <button onclick="attack()">Attack 👊</button>
 </div>
 
@@ -49,26 +55,32 @@ img { width:150px; }
 </div>
 
 <script>
-let health = 100;
 
-function next(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen'+n).classList.add('active');
+let hp = 100;
+
+function goTo(num){
+  document.getElementById("screen1").classList.remove("active");
+  document.getElementById("screen2").classList.remove("active");
+  document.getElementById("screen3").classList.remove("active");
+  document.getElementById("screen4").classList.remove("active");
+
+  document.getElementById("screen"+num).classList.add("active");
 }
 
 function move(btn){
-  btn.style.position='absolute';
-  btn.style.left=Math.random()*300+'px';
+  btn.style.position = "absolute";
+  btn.style.left = Math.random()*300 + "px";
 }
 
 function attack(){
-  health -= 20;
-  document.getElementById('hp').innerText = health;
+  hp -= 20;
+  document.getElementById("hp").innerText = hp;
 
-  if(health <= 0){
-    next(4);
+  if(hp <= 0){
+    goTo(4);
   }
 }
+
 </script>
 
 </body>
