@@ -15,26 +15,26 @@ body {
 
 /* AVATAR */
 #avatar {
-  width:200px;
+  width:220px;
   margin-top:50px;
   cursor:pointer;
   transition: transform 0.2s;
 }
 
 #avatar:active {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-/* CHOCOLATE POP */
-.chocolate {
+/* CHOCOLATE IMAGE */
+.choco {
   position:absolute;
-  font-size:30px;
+  width:80px;
   animation: pop 2s ease forwards;
 }
 
 @keyframes pop {
   0% { transform: scale(0) translateY(0); opacity:1; }
-  100% { transform: scale(1.5) translateY(-150px); opacity:0; }
+  100% { transform: scale(1.2) translateY(-200px); opacity:0; }
 }
 
 /* MESSAGE */
@@ -49,41 +49,49 @@ body {
 <body>
 
 <h1>Tap Me 🍫❤️</h1>
-<p>Every touch = one chocolate for you 💖</p>
+<p>Every touch = chocolate for you 💖</p>
 
-<img id="avatar" src="avatar.png" onclick="giveChocolate()">
+<!-- AVATAR -->
+<img id="avatar" src="standing.png" onclick="giveChocolate()">
 
 <p id="msg"></p>
 
 <script>
 
-const chocolates = ["🍫","🍩","🍰","🍪","🍬"];
-
 const messages = [
   "You are my sweetest chocolate 😍",
-  "Every moment with you is sweet 💖",
   "I love you more than chocolate 🍫❤️",
   "You are my happiness 🥺",
-  "You are my favorite person 💕"
+  "You make my life beautiful 💖",
+  "You are my favorite person ❤️"
 ];
 
 function giveChocolate(){
 
-  // random chocolate
-  const choco = document.createElement("div");
-  choco.classList.add("chocolate");
-  choco.innerHTML = chocolates[Math.floor(Math.random()*chocolates.length)];
+  const avatar = document.getElementById("avatar");
 
-  // random position
+  // CHANGE AVATAR (GIVING)
+  avatar.src = "give-chocolate.png";
+
+  // CREATE REAL CHOCOLATE IMAGE
+  const choco = document.createElement("img");
+  choco.src = "chocolate.png";  // your Dairy Milk image
+  choco.classList.add("choco");
+
   choco.style.left = Math.random()*80 + "%";
   choco.style.top = "60%";
 
   document.body.appendChild(choco);
 
-  // remove after animation
+  // REMOVE AFTER ANIMATION
   setTimeout(()=>choco.remove(),2000);
 
-  // random message
+  // CHANGE BACK TO NORMAL
+  setTimeout(()=>{
+    avatar.src = "standing.png";
+  },800);
+
+  // SHOW MESSAGE
   document.getElementById("msg").innerText =
     messages[Math.floor(Math.random()*messages.length)];
 }
