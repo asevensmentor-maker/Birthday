@@ -2,77 +2,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday ❤️</title>
+<title>Happy Birthday My Love ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    text-align: center;
-    color: #fff;
-  }.container { padding: 20px; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+.container { padding: 20px; }
+h1 { font-size: 42px; margin-top: 40px; }
+p { font-size: 18px; }.btn { padding: 14px 24px; background: white; color: #ff4d6d; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
-h1 { font-size: 40px; margin-top: 30px; }
+.section { display: none; margin-top: 30px; }
 
-p { font-size: 18px; max-width: 600px; margin: auto; }
+img { width: 220px; border-radius: 20px; margin: 10px; }
 
-.btn { margin-top: 20px; padding: 12px 20px; background: #ff4d6d; border: none; border-radius: 25px; color: white; font-size: 16px; cursor: pointer; }
+.gallery { display: flex; flex-wrap: wrap; justify-content: center; }
 
-.hidden { display: none; margin-top: 20px; }
+.hearts { position: fixed; width: 100%; height: 100%; pointer-events: none; }
 
-img { width: 200px; margin-top: 20px; }
-
-.hearts { position: fixed; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; }
-
-.heart { position: absolute; color: red; animation: float 5s linear infinite; }
+.heart { position: absolute; animation: float 6s linear infinite; }
 
 @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } } </style>
 
 </head>
 <body><div class="hearts"></div><div class="container">
   <h1>Happy Birthday My Love ❤️</h1>
-  <p>Welcome to your special world... made just for you 💖</p><button class="btn" onclick="startSurprise()">Enter Surprise 🎁</button>
-
-  <div id="scene" class="hidden">
-    <h2>🎂 A Special Surprise For You 🎂</h2><!-- Cartoon Character (replace with your GIF) -->
-<img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="cartoon">
-
-<p>Just like this little moment... I wish I could celebrate with you 🥺❤️</p>
-
-<h3>💖 Things That Remind Me Of You 💖</h3>
-<p>🧸 Cute like Stitch<br>
-   🍦 Sweet like Ice Cream<br>
-   🍫 Softer than Chocolate<br>
-</p>
-
-<h3>💌 Message For You</h3>
-<p>
-  You are the most beautiful part of my life ❤️<br>
-  Every moment with you is special ✨<br><br>
-  Happy Birthday once again my love 💕
-</p>
-
-  </div>
-</div><audio id="music" loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/mpeg">
+  <p>Welcome to your magical world... made just for you 💖</p>
+  <button class="btn" onclick="startSurprise()">Enter Surprise 🎁</button>  <!-- WALKING CHARACTER -->  <div id="walk" class="section">
+    <h2>🎂 Someone is coming with a cake...</h2>
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
+  </div>  <!-- DANCING -->  <div id="dance" class="section">
+    <h2>💃 Dancing for You</h2>
+    <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
+  </div>  <!-- PERSONAL SECTION -->  <div id="love" class="section">
+    <h2>💖 Things That Remind Me Of You</h2>
+    <p>
+      🧸 Cute like Stitch<br>
+      🍦 Sweet like Ice Cream<br>
+      🍫 Sweeter than Chocolate
+    </p>
+  </div>  <!-- GALLERY -->  <div id="gallery" class="section">
+    <h2>📸 Our Beautiful Memories</h2>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/200">
+      <img src="https://via.placeholder.com/200">
+      <img src="https://via.placeholder.com/200">
+    </div>
+  </div>  <!-- FINAL MESSAGE -->  <div id="final" class="section">
+    <h2>💌 For You</h2>
+    <p>
+      You are my happiness, my peace, my everything ❤️<br>
+      I wish I could celebrate with you in person 🥺<br>
+      But this little world is made just for you 💖<br><br>
+      Happy Birthday ❤️✨
+    </p>
+  </div></div><audio id="music" loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
 </audio><script>
 function startSurprise() {
-  document.getElementById("scene").style.display = "block";
-  document.getElementById("music").play();
+  document.getElementById('music').play();
+
+  showSection('walk', 0);
+  showSection('dance', 4000);
+  showSection('love', 8000);
+  showSection('gallery', 12000);
+  showSection('final', 16000);
 }
 
-// Floating hearts
-const heartsContainer = document.querySelector('.hearts');
+function showSection(id, delay) {
+  setTimeout(() => {
+    document.getElementById(id).style.display = 'block';
+  }, delay);
+}
+
+// hearts
+const container = document.querySelector('.hearts');
 setInterval(() => {
   const heart = document.createElement('div');
   heart.classList.add('heart');
-  heart.style.left = Math.random() * 100 + 'vw';
   heart.innerHTML = '❤️';
-  heartsContainer.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 5000);
+  heart.style.left = Math.random() * 100 + 'vw';
+  container.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
 }, 300);
 </script></body>
 </html>
