@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Memories ❤️</title>
+
+<style>
+body {
+  margin:0;
+  background: linear-gradient(to bottom, #ffe4ec, #ffc1cc);
+  font-family: 'Poppins', sans-serif;
+  text-align:center;
+  color:#333;
+}
+
+/* IMAGE */
+#photo {
+  width:250px;
+  margin-top:50px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  transition: opacity 1s;
+}
+
+/* TEXT */
+#message {
+  margin-top:20px;
+  font-size:20px;
+  max-width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  min-height:60px;
+}
+
+/* FADE */
+.fade {
+  opacity:0;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>💖 Our Beautiful Memories 💖</h1>
+
+<img id="photo" src="photo1.jpg">
+
+<p id="message"></p>
+
+<script>
+
+const photos = [
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo3.jpg",
+  "photo4.jpg"
+];
+
+const messages = [
+  "This day was one of the best days of my life ❤️",
+  "Your smile here made my world brighter 😍",
+  "Every moment with you feels special 💖",
+  "I wish I could relive this day forever 🥺"
+];
+
+let index = 0;
+let charIndex = 0;
+
+function typeText(text){
+  const msgEl = document.getElementById("message");
+  msgEl.innerHTML = "";
+  charIndex = 0;
+
+  function typing(){
+    if(charIndex < text.length){
+      msgEl.innerHTML += text.charAt(charIndex);
+      charIndex++;
+      setTimeout(typing, 40);
+    }
+  }
+
+  typing();
+}
+
+function showNext(){
+
+  const img = document.getElementById("photo");
+
+  img.classList.add("fade");
+
+  setTimeout(()=>{
+
+    index++;
+
+    if(index >= photos.length){
+      showFinal();
+      return;
+    }
+
+    img.src = photos[index];
+    img.classList.remove("fade");
+
+    typeText(messages[index]);
+
+  },1000);
+}
+
+// INITIAL
+typeText(messages[0]);
+
+// AUTO CHANGE EVERY 5 SEC
+setInterval(showNext, 5000);
+
+function showFinal(){
+  document.body.innerHTML = `
+    <h1>❤️ Best Memories With You ❤️</h1>
+    <p style="font-size:22px;">
+      Every moment with you is my favorite memory 💖<br><br>
+      I love you forever ❤️
+    </p>
+  `;
+}
+
+</script>
+
+</body>
+</html>
