@@ -1,88 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sweet Like You 🍫</title>
+<title>For You 🍫💖</title>
 
 <style>
 body {
   margin:0;
-  font-family: 'Poppins', sans-serif;
   background: linear-gradient(to bottom, #3e2723, #1b0f0a);
   color:white;
   text-align:center;
+  font-family: Arial;
   overflow:hidden;
 }
 
-/* TITLE */
-h1 {
-  margin-top:40px;
-  font-size:35px;
+/* AVATAR */
+#avatar {
+  width:200px;
+  margin-top:50px;
+  cursor:pointer;
+  transition: transform 0.2s;
 }
 
-/* CHOCOLATE FLOAT */
-.floating {
-  position: fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
+#avatar:active {
+  transform: scale(1.1);
 }
 
-.floating span {
+/* CHOCOLATE POP */
+.chocolate {
   position:absolute;
   font-size:30px;
-  animation: float 6s linear infinite;
+  animation: pop 2s ease forwards;
 }
 
-@keyframes float {
-  0% { transform: translateY(100vh); opacity:1; }
-  100% { transform: translateY(-10vh); opacity:0; }
-}
-
-/* CHOCOLATE ITEMS */
-.choco-container {
-  margin-top:40px;
-}
-
-.choco {
-  font-size:50px;
-  margin:20px;
-  cursor:pointer;
-  transition: transform 0.3s;
-}
-
-.choco:hover {
-  transform: scale(1.3);
+@keyframes pop {
+  0% { transform: scale(0) translateY(0); opacity:1; }
+  100% { transform: scale(1.5) translateY(-150px); opacity:0; }
 }
 
 /* MESSAGE */
 #msg {
   margin-top:20px;
   font-size:20px;
-  min-height:40px;
-}
-
-/* BUTTON */
-button {
-  padding:12px 20px;
-  border:none;
-  border-radius:25px;
-  background:#ff8a65;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:20px;
-}
-
-/* FINAL BOX */
-#final {
-  display:none;
-  margin-top:30px;
-  animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity:0; transform:scale(0.8); }
-  to { opacity:1; transform:scale(1); }
 }
 </style>
 
@@ -90,48 +48,44 @@ button {
 
 <body>
 
-<div class="floating" id="floating"></div>
+<h1>Tap Me 🍫❤️</h1>
+<p>Every touch = one chocolate for you 💖</p>
 
-<h1>🍫 Sweet Like You 🍫</h1>
-<p>You make my life sweeter every day ❤️</p>
-
-<div class="choco-container">
-  <span class="choco" onclick="showMsg('Your smile is sweeter than chocolate 😍')">🍫</span>
-  <span class="choco" onclick="showMsg('You are my happiness 🥺')">🍰</span>
-  <span class="choco" onclick="showMsg('You are my favorite person ❤️')">🍩</span>
-</div>
+<img id="avatar" src="avatar.png" onclick="giveChocolate()">
 
 <p id="msg"></p>
 
-<button onclick="showFinal()">Open Special Gift 🎁</button>
-
-<div id="final">
-  <h2>🎂 You are my sweetest gift ❤️</h2>
-  <p>I love you forever 💖</p>
-</div>
-
 <script>
 
-/* FLOATING EFFECT */
-const container = document.getElementById("floating");
+const chocolates = ["🍫","🍩","🍰","🍪","🍬"];
 
-setInterval(() => {
-  const el = document.createElement("span");
-  el.innerHTML = Math.random() > 0.5 ? "🍫" : "❤️";
-  el.style.left = Math.random()*100 + "vw";
-  container.appendChild(el);
+const messages = [
+  "You are my sweetest chocolate 😍",
+  "Every moment with you is sweet 💖",
+  "I love you more than chocolate 🍫❤️",
+  "You are my happiness 🥺",
+  "You are my favorite person 💕"
+];
 
-  setTimeout(()=>el.remove(),6000);
-},400);
+function giveChocolate(){
 
-/* MESSAGE */
-function showMsg(text){
-  document.getElementById("msg").innerText = text;
-}
+  // random chocolate
+  const choco = document.createElement("div");
+  choco.classList.add("chocolate");
+  choco.innerHTML = chocolates[Math.floor(Math.random()*chocolates.length)];
 
-/* FINAL */
-function showFinal(){
-  document.getElementById("final").style.display = "block";
+  // random position
+  choco.style.left = Math.random()*80 + "%";
+  choco.style.top = "60%";
+
+  document.body.appendChild(choco);
+
+  // remove after animation
+  setTimeout(()=>choco.remove(),2000);
+
+  // random message
+  document.getElementById("msg").innerText =
+    messages[Math.floor(Math.random()*messages.length)];
 }
 
 </script>
