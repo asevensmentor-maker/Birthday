@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday My Love 🎂</title>
+
+<style>
+body {
+  margin:0;
+  background: linear-gradient(#ff758c, #ff7eb3);
+  color:white;
+  text-align:center;
+  font-family: Arial;
+  overflow:hidden;
+}
+
+/* AVATARS */
+.avatar {
+  width:140px;
+  position:absolute;
+  bottom:100px;
+}
+
+/* YOUR AVATAR */
+#you {
+  left:-200px;
+  animation: walkIn 4s forwards;
+}
+
+/* GF AVATAR */
+#gf {
+  right:-200px;
+  display:none;
+}
+
+/* STITCH */
+#stitch {
+  left:20%;
+  animation: dance1 0.6s infinite alternate;
+}
+
+/* DANCERS */
+.dancer {
+  width:100px;
+  position:absolute;
+  bottom:100px;
+}
+
+/* DIFFERENT SPEEDS */
+.d1 { animation: dance1 0.4s infinite alternate; }
+.d2 { animation: dance2 0.6s infinite alternate; }
+.d3 { animation: dance3 0.5s infinite alternate; }
+.d4 { animation: dance2 0.7s infinite alternate; }
+
+/* CAKE */
+#cake {
+  width:150px;
+  margin-top:80px;
+  transition: transform 0.5s;
+}
+
+/* CAKE CUT */
+.cut {
+  transform: rotate(-10deg) scale(0.9);
+}
+
+/* BUTTON */
+button {
+  padding:12px 20px;
+  border:none;
+  border-radius:25px;
+  margin:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ANIMATIONS */
+@keyframes walkIn {
+  to { left:40%; }
+}
+
+@keyframes dance1 {
+  from { transform: rotate(-6deg) translateY(0); }
+  to { transform: rotate(6deg) translateY(-10px); }
+}
+
+@keyframes dance2 {
+  from { transform: rotate(-4deg) translateY(0); }
+  to { transform: rotate(4deg) translateY(-15px); }
+}
+
+@keyframes dance3 {
+  from { transform: rotate(-8deg) translateY(0); }
+  to { transform: rotate(8deg) translateY(-8px); }
+}
+
+/* HEART */
+.heart {
+  position:absolute;
+  font-size:20px;
+  animation: float 3s linear forwards;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-200px); opacity:0; }
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<!-- YOUR AVATAR -->
+<img id="you" src="standing.png" class="avatar">
+
+<!-- GF AVATAR -->
+<img id="gf" src="gf.png" class="avatar">
+
+<!-- STITCH -->
+<img id="stitch" src="stitch.png" class="avatar">
+
+<!-- DANCERS -->
+<img src="dancing.png" class="dancer d1" style="left:5%">
+<img src="dancing.png" class="dancer d2" style="left:25%">
+<img src="dancing.png" class="dancer d3" style="left:65%">
+<img src="dancing.png" class="dancer d4" style="left:85%">
+
+<!-- CAKE -->
+<img id="cake" src="cake.png">
+
+<br>
+
+<button onclick="blowCandle()">Blow Candle 🕯️</button>
+<button onclick="cutCake()">Cut Cake 🎂</button>
+
+<p id="msg"></p>
+
+<script>
+
+// GF appears
+setTimeout(()=>{
+  document.getElementById("gf").style.display = "block";
+},4000);
+
+function blowCandle(){
+  document.getElementById("msg").innerText = "Make a wish 💖";
+}
+
+function cutCake(){
+
+  const cake = document.getElementById("cake");
+  cake.classList.add("cut");
+
+  document.getElementById("msg").innerText =
+    "Happy Birthday My Love ❤️🎂";
+
+  celebrate();
+}
+
+/* HEART EXPLOSION */
+function celebrate(){
+  for(let i=0;i<50;i++){
+    let heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.classList.add("heart");
+
+    heart.style.left = Math.random()*100+"vw";
+    heart.style.top = "60%";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),3000);
+  }
+}
+
+</script>
+
+</body>
+</html>
