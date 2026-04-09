@@ -5,6 +5,7 @@
 
 <style>
 body {
+  margin:0;
   background: linear-gradient(to right, #ff758c, #ff7eb3);
   color:white;
   text-align:center;
@@ -15,33 +16,47 @@ body {
 .screen { display:none; }
 .active { display:block; }
 
+/* BUTTON */
+button {
+  padding:12px 20px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:16px;
+}
+
 /* GAME AREA */
 .game {
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
   align-items:center;
   margin-top:50px;
+  padding: 0 40px;
 }
 
 /* CHARACTERS */
 .character {
   width:160px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   position: relative;
 }
 
-/* MOVE CLOSE */
-.attack-move-left {
-  transform: translateX(120px);
+/* CLOSE FIGHT */
+.attack-left {
+  transform: translateX(240px) scale(1.1);
+  z-index: 2;
 }
 
-.attack-move-right {
-  transform: translateX(-120px);
+.attack-right {
+  transform: translateX(-240px) scale(1.1);
+  z-index: 2;
 }
 
 /* HIT EFFECT */
 .hit {
-  transform: scale(0.9);
+  transform: scale(0.85);
+  filter: brightness(0.8);
 }
 
 /* HEALTH BAR */
@@ -58,14 +73,6 @@ body {
   background:red;
   border-radius:10px;
 }
-
-/* BUTTON */
-button {
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  margin:10px;
-}
 </style>
 
 </head>
@@ -75,35 +82,49 @@ button {
 <!-- SCREEN 1 -->
 <div id="screen1" class="active">
   <h1>Happy Birthday ❤️</h1>
-  <button onclick="go(2)">Start 💖</button>
+  <p>Are you ready for your surprise?</p>
+  <button onclick="go(2)">Yes 💖</button>
+  <button onmouseover="run(this)">No 😜</button>
 </div>
 
 <!-- SCREEN 2 -->
 <div id="screen2" class="screen">
-  <h2>Fight Begins 🎮</h2>
+  <h2>Enter the Fight Arena 🎮</h2>
+  <button onclick="go(3)">Start Battle 💥</button>
+</div>
+
+<!-- SCREEN 3 GAME -->
+<div id="screen3" class="screen">
+
+  <h2>💖 Fight for Her Heart 💖</h2>
 
   <div class="game">
 
     <!-- YOU -->
     <div>
       <img id="you" src="avatar.png" class="character">
+      <p>You ❤️</p>
       <div class="bar"><div id="youHP" class="hp" style="width:100%"></div></div>
     </div>
 
     <!-- STITCH -->
     <div>
       <img id="stitch" src="stitch.png" class="character">
+      <p>Stitch 🧸</p>
       <div class="bar"><div id="stitchHP" class="hp" style="width:100%"></div></div>
     </div>
 
   </div>
 
   <button onclick="attack()">Attack 👊</button>
+  <button onclick="power()">Power 💥</button>
+
 </div>
 
-<!-- WIN -->
-<div id="screen3" class="screen">
-  <h1>❤️ I AM YOUR FAVORITE ❤️</h1>
+<!-- SCREEN 4 -->
+<div id="screen4" class="screen">
+  <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
+  <p>But you are my everything 💖</p>
 </div>
 
 <script>
@@ -113,6 +134,12 @@ function go(n){
   document.getElementById('screen'+n).classList.add('active');
 }
 
+function run(btn){
+  btn.style.position='absolute';
+  btn.style.left=Math.random()*300+'px';
+}
+
+/* GAME LOGIC */
 let you = 100;
 let stitch = 100;
 
@@ -126,25 +153,60 @@ function attack(){
   const youChar = document.getElementById("you");
   const stitchChar = document.getElementById("stitch");
 
-  // MOVE CLOSE
-  youChar.classList.add("attack-move-left");
-  stitchChar.classList.add("attack-move-right");
-
-  // HIT EFFECT
-  stitchChar.classList.add("hit");
+  // MOVE CLOSE (TOUCH)
+  youChar.classList.add("attack-left");
+  stitchChar.classList.add("attack-right");
 
   setTimeout(()=>{
-    youChar.classList.remove("attack-move-left");
-    stitchChar.classList.remove("attack-move-right");
+    stitchChar.classList.add("hit");
+  },150);
+
+  setTimeout(()=>{
+    youChar.classList.remove("attack-left");
+    stitchChar.classList.remove("attack-right");
     stitchChar.classList.remove("hit");
-  },300);
+  },400);
 
   // DAMAGE
-  stitch -= 20;
-  update();
+  stitch -= Math.floor(Math.random()*15)+10;
+  you -= Math.floor(Math.random()*8);
 
+  update();
+  check();
+}
+
+function power(){
+
+  const youChar = document.getElementById("you");
+  const stitchChar = document.getElementById("stitch");
+
+  youChar.classList.add("attack-left");
+  stitchChar.classList.add("attack-right");
+
+  setTimeout(()=>{
+    stitchChar.classList.add("hit");
+  },150);
+
+  setTimeout(()=>{
+    youChar.classList.remove("attack-left");
+    stitchChar.classList.remove("attack-right");
+    stitchChar.classList.remove("hit");
+  },400);
+
+  stitch -= Math.floor(Math.random()*25)+20;
+  you -= Math.floor(Math.random()*12);
+
+  update();
+  check();
+}
+
+function check(){
   if(stitch <= 0){
-    go(3);
+    go(4);
+  }
+  if(you <= 0){
+    alert("Stitch wins 😅 Try again!");
+    location.reload();
   }
 }
 
