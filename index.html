@@ -1,9 +1,12 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday My Love ❤️</title>
+<title>Happy Birthday ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
@@ -13,74 +16,164 @@ body {
   text-align: center;
   overflow-x: hidden;
 }
-.container { padding: 20px; }
-h1 { font-size: 42px; margin-top: 40px; }
-p { font-size: 18px; }.btn { padding: 14px 24px; background: white; color: #ff4d6d; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
-.section { display: none; margin-top: 30px; }
+/* BUTTON */
+.btn {
+  padding: 14px 24px;
+  background: white;
+  color: #ff4d6d;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
 
-img { width: 220px; border-radius: 20px; margin: 10px; }
+/* HEARTS */
+.hearts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
-.gallery { display: flex; flex-wrap: wrap; justify-content: center; }
+.heart {
+  position: absolute;
+  animation: float 6s linear infinite;
+}
 
-.hearts { position: fixed; width: 100%; height: 100%; pointer-events: none; }
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
 
-.heart { position: absolute; animation: float 6s linear infinite; }
+/* WALK ANIMATION */
+#walk {
+  position: absolute;
+  left: -250px;
+  top: 200px;
+  width: 220px;
+  animation: walkMove 6s linear forwards;
+}
 
-@keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } } </style>
+@keyframes walkMove {
+  from { left: -250px; }
+  to { left: 50%; transform: translateX(-50%); }
+}
+
+/* DANCE */
+#dance {
+  display: none;
+  width: 220px;
+  margin-top: 250px;
+  animation: danceMove 0.6s infinite alternate;
+}
+
+@keyframes danceMove {
+  from { transform: rotate(-6deg) scale(1); }
+  to { transform: rotate(6deg) scale(1.05); }
+}
+
+/* SECTIONS */
+.section {
+  display: none;
+  margin-top: 40px;
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery img {
+  width: 150px;
+  border-radius: 15px;
+  margin: 10px;
+}
+</style>
 
 </head>
-<body><div class="hearts"></div><div class="container">
-  <h1>Happy Birthday My Love ❤️</h1>
-  <p>Welcome to your magical world... made just for you 💖</p>
-  <button class="btn" onclick="startSurprise()">Enter Surprise 🎁</button>  <!-- WALKING CHARACTER -->  <div id="walk" class="section">
-    <h2>🎂 Someone is coming with a cake...</h2>
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
-  </div>  <!-- DANCING -->  <div id="dance" class="section">
-    <h2>💃 Dancing for You</h2>
-    <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
-  </div>  <!-- PERSONAL SECTION -->  <div id="love" class="section">
-    <h2>💖 Things That Remind Me Of You</h2>
-    <p>
-      🧸 Cute like Stitch<br>
-      🍦 Sweet like Ice Cream<br>
-      🍫 Sweeter than Chocolate
-    </p>
-  </div>  <!-- GALLERY -->  <div id="gallery" class="section">
-    <h2>📸 Our Beautiful Memories</h2>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/200">
-      <img src="https://via.placeholder.com/200">
-      <img src="https://via.placeholder.com/200">
-    </div>
-  </div>  <!-- FINAL MESSAGE -->  <div id="final" class="section">
-    <h2>💌 For You</h2>
-    <p>
-      You are my happiness, my peace, my everything ❤️<br>
-      I wish I could celebrate with you in person 🥺<br>
-      But this little world is made just for you 💖<br><br>
-      Happy Birthday ❤️✨
-    </p>
-  </div></div><audio id="music" loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
-</audio><script>
+
+<body>
+
+<div class="hearts"></div>
+
+<h1>Happy Birthday My Love ❤️</h1>
+<p>Welcome to your magical world... made just for you 💖</p>
+
+<button class="btn" onclick="startSurprise()">Enter Surprise 🎁</button>
+
+<!-- WALK -->
+<img id="walk" src="walk.png">
+
+<!-- DANCE -->
+<img id="dance" src="dance.png">
+
+<!-- LOVE SECTION -->
+<div id="love" class="section">
+  <h2>💖 Things That Remind Me Of You</h2>
+  <p>
+    🧸 Cute like Stitch <br>
+    🍦 Sweet like Ice Cream <br>
+    🍫 Sweeter than Chocolate
+  </p>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery" class="section">
+  <h2>📸 Our Memories</h2>
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+  </div>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="section">
+  <h2>💌 For You</h2>
+  <p>
+    You are my happiness, my peace, my everything ❤️<br>
+    I wish I could celebrate with you in person 🥺<br>
+    But this little world is made just for you 💖<br><br>
+    Happy Birthday ❤️✨
+  </p>
+</div>
+
+<!-- MUSIC -->
+<audio id="music">
+  <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<script>
 function startSurprise() {
-  document.getElementById('music').play();
+  document.getElementById("music").play();
 
-  showSection('walk', 0);
-  showSection('dance', 4000);
-  showSection('love', 8000);
-  showSection('gallery', 12000);
-  showSection('final', 16000);
-}
+  // WALK SHOW
+  document.getElementById("walk").style.display = "block";
 
-function showSection(id, delay) {
+  // SWITCH TO DANCE
   setTimeout(() => {
-    document.getElementById(id).style.display = 'block';
-  }, delay);
+    document.getElementById("walk").style.display = "none";
+    document.getElementById("dance").style.display = "block";
+  }, 6000);
+
+  // SHOW SECTIONS
+  setTimeout(() => {
+    document.getElementById("love").style.display = "block";
+  }, 8000);
+
+  setTimeout(() => {
+    document.getElementById("gallery").style.display = "block";
+  }, 11000);
+
+  setTimeout(() => {
+    document.getElementById("final").style.display = "block";
+  }, 14000);
 }
 
-// hearts
+// HEARTS EFFECT
 const container = document.querySelector('.hearts');
 setInterval(() => {
   const heart = document.createElement('div');
@@ -90,5 +183,7 @@ setInterval(() => {
   container.appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
 }, 300);
-</script></body>
+</script>
+
+</body>
 </html>
