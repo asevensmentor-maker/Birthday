@@ -20,7 +20,7 @@ h1 {
     font-size: 32px;
 }
 
-/* Scene Layout */
+/* Scene */
 .scene {
     position: relative;
     height: 75vh;
@@ -32,6 +32,7 @@ h1 {
     position: absolute;
     bottom: 0;
     transition: all 1.5s ease-in-out;
+    z-index: 2;
 }
 
 #hero {
@@ -60,6 +61,7 @@ h1 {
     bottom: 220px;
     display: none;
     cursor: pointer;
+    z-index: 1;
 }
 
 /* Whole Cake */
@@ -192,7 +194,6 @@ h1 {
     </div>
 </div>
 
-<!-- Controls -->
 <button id="blowBtn" class="btn">Blow Candle 🕯️</button>
 
 <p id="message"></p>
@@ -218,7 +219,7 @@ setTimeout(() => {
     hero.classList.add("walk-in");
 }, 500);
 
-/* Step 2: Girlfriend appears after 1.5 sec */
+/* Step 2: Girlfriend appears */
 setTimeout(() => {
     gf.style.display = "block";
 }, 2000);
@@ -230,7 +231,7 @@ setTimeout(() => {
     message.innerText = "Blow the candle, my love 💖";
 }, 3500);
 
-/* Blow Candle Button */
+/* Blow Candle */
 blowBtn.addEventListener("click", () => {
     candle.style.display = "none";
     blowBtn.style.display = "none";
@@ -263,7 +264,6 @@ function showCelebration() {
     launchFireworks(30);
 }
 
-/* Hearts Animation */
 function launchHearts(count) {
     for (let i = 0; i < count; i++) {
         const heart = document.createElement("div");
@@ -276,7 +276,6 @@ function launchHearts(count) {
     }
 }
 
-/* Fireworks Animation */
 function launchFireworks(count) {
     for (let i = 0; i < count; i++) {
         const fire = document.createElement("div");
