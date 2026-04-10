@@ -1,42 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Final Birthday Surprise 🎂</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 26px;
+        }
+
+        /* Main Layout */
+        .scene {
+            max-width: 900px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        /* Candle */
+        #candle {
+            font-size: 30px;
+            margin-bottom: -10px;
+        }
+
+        /* Cake */
+        #cake {
+            width: 260px;
+            margin: 10px auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        #cake.slice {
+            transform: rotate(-10deg) scale(0.95);
+        }
+
+        /* Characters */
+        .characters {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .avatar {
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        /* Individual Sizes */
+        #hero {
+            width: 150px;
+        }
+
+        #gf {
+            width: 170px; /* Increased size */
+        }
+
+        #stitch {
+            width: 160px;
+        }
+
+        /* Buttons */
+        .controls {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff4d6d, #ff85a2);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Wish Box */
+        #wishBox {
+            display: none;
+            margin-top: 15px;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            width: 260px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: fixed;
+            font-size: 22px;
+            animation: floatUp 3s linear forwards;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-250px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            #cake {
+                width: 200px;
+            }
+
+            #hero {
+                width: 120px;
+            }
+
+            #gf {
+                width: 140px;
+            }
+
+            #stitch {
+                width: 130px;
+            }
+
+            input {
+                width: 200px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
+<h1>🎉 Happy Birthday My Love ❤️</h1>
 
 <div class="scene">
-    <div id="cakeContainer">
-        <div id="candle">🕯️</div>
-        <img id="cake" src="cake2.png">
-    </div>
+    
+    <!-- Candle -->
+    <div id="candle">🕯️</div>
 
+    <!-- Cake -->
+    <img id="cake" src="cake2.png" alt="Birthday Cake">
+
+    <!-- Characters -->
     <div class="characters">
-        <img id="hero" src="cake.png" class="avatar">
-        <img id="gf" src="gf.png" class="avatar">
-        <img id="stitch" src="stitch.png" class="avatar">
+        <img id="hero" src="cake.png" class="avatar" alt="Hero">
+        <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
+        <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
     </div>
+
 </div>
 
-<div>
-    <button class="btn" id="blowBtn" onclick="blowCandle()">Blow Candle 🕯️</button>
-    <button class="btn" id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
-    <button class="btn" id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
+<!-- Controls -->
+<div class="controls">
+    <button id="blowBtn" onclick="blowCandle()">Blow Candle 🕯️</button>
+    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
+    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
 </div>
 
-<div id="wishBox" style="display:none;">
+<!-- Wish Box -->
+<div id="wishBox">
     <input type="text" id="wishInput" placeholder="Type your wish...">
     <br><br>
-    <button class="btn" onclick="saveWish()">Submit Wish ✨</button>
+    <button onclick="saveWish()">Submit Wish ✨</button>
 </div>
 
 <p id="message"></p>
 
 <script src="script.js"></script>
+
 <script>
 function blowCandle() {
     document.getElementById("candle").style.display = "none";
@@ -50,13 +209,16 @@ function showWish() {
 }
 
 function saveWish() {
-    const wish = document.getElementById("wishInput").value;
-    if (!wish.trim()) {
+    const wish = document.getElementById("wishInput").value.trim();
+    if (wish === "") {
         alert("Please enter your wish 💖");
         return;
     }
-    document.getElementById("message").innerText = "Her Wish: " + wish + " 💖";
+
     document.getElementById("wishBox").style.display = "none";
+    document.getElementById("message").innerText =
+        "Her Wish: " + wish + " 💖";
+
     document.getElementById("cutBtn").style.display = "inline-block";
 }
 
@@ -64,8 +226,10 @@ function cutCake() {
     document.getElementById("cake").classList.add("slice");
     document.getElementById("message").innerText =
         "Happy Birthday My Love ❤️🎂";
+
     launchHearts(40);
 }
 </script>
+
 </body>
 </html>
