@@ -28,41 +28,46 @@
         .avatar {
             position: absolute;
             bottom: 0;
-            width: 110px;
+            height: 140px;
+            width: auto;
         }
 
+        /* Your Avatar Walking with Cake */
         #hero {
-            left: -150px;
-            bottom: 0;
+            left: -200px;
+            height: 170px;
+            animation: walkIn 3s forwards;
         }
 
+        /* Dancing Avatar */
         #danceAvatar {
             left: 10%;
-            width: 90px;
             display: none;
             animation: dance 0.6s infinite alternate;
         }
 
+        /* Stitch */
         #stitch {
             right: 10%;
-            width: 90px;
             display: none;
             animation: dance 0.6s infinite alternate;
         }
 
+        /* Girlfriend Avatar */
         #gf {
             left: 50%;
             transform: translateX(-50%);
-            width: 110px;
+            height: 170px;
             display: none;
+            animation: fadeInUp 1.5s ease forwards;
         }
 
-        /* Cake */
+        /* Cake Container */
         #cakeContainer {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 120px;
+            bottom: 140px;
             display: none;
         }
 
@@ -77,7 +82,7 @@
 
         #candle {
             font-size: 26px;
-            margin-bottom: -20px;
+            margin-bottom: -15px;
         }
 
         /* Buttons */
@@ -97,8 +102,10 @@
             background: #ffe6ec;
         }
 
+        /* Wish Box */
         #wishBox {
             display: none;
+            margin-top: 10px;
         }
 
         input {
@@ -110,17 +117,27 @@
         }
 
         /* Animations */
+        @keyframes walkIn {
+            to {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
         @keyframes dance {
             from { transform: translateY(0) rotate(-5deg); }
             to { transform: translateY(-10px) rotate(5deg); }
         }
 
-        @keyframes walkCenter {
-            to { left: 50%; transform: translateX(-50%); }
-        }
-
-        .walk {
-            animation: walkCenter 3s forwards;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 40px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
         }
 
         /* Hearts */
@@ -131,8 +148,22 @@
         }
 
         @keyframes floatUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-200px); opacity: 0; }
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .avatar { height: 110px; }
+            #hero { height: 140px; }
+            #gf { height: 140px; }
+            #cake { width: 140px; }
         }
     </style>
 </head>
@@ -144,35 +175,41 @@
 <div class="scene">
 
     <!-- Your Avatar with Cake -->
-    <img id="hero" src="hero-cake.png" class="avatar">
+    <img id="hero" src="cake.png" class="avatar">
 
     <!-- Dancing Avatars -->
-    <img id="danceAvatar" src="dance.png" class="avatar">
+    <img id="danceAvatar" src="dancing.png" class="avatar">
     <img id="stitch" src="stitch.png" class="avatar">
 
     <!-- Girlfriend Avatar -->
     <img id="gf" src="gf.png" class="avatar">
 
-    <!-- Cake with Candle -->
+    <!-- Cake -->
     <div id="cakeContainer">
         <div id="candle">🕯️</div>
-        <img id="cake" src="cake.png">
+        <img id="cake" src="cake1.png">
     </div>
 
 </div>
 
 <!-- Controls -->
 <div id="controls">
-    <button id="blowBtn" style="display:none;" onclick="blowCandle()">Blow Candle 🕯️</button>
-    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
-    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
+    <button id="blowBtn" style="display:none;" onclick="blowCandle()">
+        Blow Candle 🕯️
+    </button>
+    <button id="wishBtn" style="display:none;" onclick="showWish()">
+        Make a Wish 💖
+    </button>
+    <button id="cutBtn" style="display:none;" onclick="cutCake()">
+        Cut Cake 🎂
+    </button>
 </div>
 
 <!-- Wish Input -->
 <div id="wishBox">
     <input type="text" id="wishInput" placeholder="Type your wish...">
     <br><br>
-    <button onclick="saveWish()">Submit Wish ✨</button>
+    <button id="submitWishBtn" onclick="saveWish()">Submit Wish ✨</button>
 </div>
 
 <p id="message"></p>
@@ -183,18 +220,19 @@
 </audio>
 
 <script>
-    // Step 1: Hero walks to center
+    // Step 1: Hero walks in
     window.onload = function() {
-        document.getElementById("hero").classList.add("walk");
+        document.getElementById("hero").style.animation =
+            "walkIn 3s forwards";
     };
 
-    // Step 2: Dancing avatars appear
+    // Step 2: Dancers appear
     setTimeout(() => {
         document.getElementById("danceAvatar").style.display = "block";
         document.getElementById("stitch").style.display = "block";
     }, 3000);
 
-    // Step 3: GF avatar appears
+    // Step 3: GF appears
     setTimeout(() => {
         document.getElementById("gf").style.display = "block";
     }, 5000);
@@ -205,32 +243,45 @@
         document.getElementById("blowBtn").style.display = "inline-block";
     }, 7000);
 
+    // Blow Candle
     function blowCandle() {
         document.getElementById("candle").style.display = "none";
         document.getElementById("blowBtn").style.display = "none";
         document.getElementById("wishBtn").style.display = "inline-block";
     }
 
+    // Show Wish Box
     function showWish() {
         document.getElementById("wishBtn").style.display = "none";
         document.getElementById("wishBox").style.display = "block";
     }
 
+    // Save Wish
     function saveWish() {
-        const wish = document.getElementById("wishInput").value;
+        const wish = document.getElementById("wishInput").value.trim();
+
+        if (wish === "") {
+            alert("Please enter your wish 💖");
+            return;
+        }
+
         document.getElementById("wishBox").style.display = "none";
         document.getElementById("message").innerText =
             "Her Wish: " + wish + " 💖";
+
         document.getElementById("cutBtn").style.display = "inline-block";
     }
 
+    // Cut Cake
     function cutCake() {
         document.getElementById("cake").classList.add("slice");
         document.getElementById("message").innerText =
             "Happy Birthday My Love ❤️🎂";
+
         launchHearts();
     }
 
+    // Heart Celebration
     function launchHearts() {
         for (let i = 0; i < 40; i++) {
             let heart = document.createElement("div");
@@ -239,6 +290,7 @@
             heart.style.left = Math.random() * 100 + "vw";
             heart.style.bottom = "100px";
             document.body.appendChild(heart);
+
             setTimeout(() => heart.remove(), 3000);
         }
     }
