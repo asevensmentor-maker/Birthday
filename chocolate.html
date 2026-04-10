@@ -1,153 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For You 🍫💖</title>
-
-    <!-- Global Styles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        body {
-            margin: 0;
-            background: linear-gradient(to bottom, #3e2723, #1b0f0a);
-            color: white;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-        }
-
-        h1 {
-            margin-top: 20px;
-        }
-
-        /* Container */
-        .container {
-            padding: 20px;
-        }
-
-        /* Avatar */
-        #avatar {
-            width: 220px;
-            margin-top: 30px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        #avatar:active {
-            transform: scale(1.05);
-        }
-
-        /* Chocolate Animation */
-        .choco {
-            position: absolute;
-            width: 80px;
-            animation: pop 2s ease forwards;
-        }
-
-        @keyframes pop {
-            0% {
-                transform: scale(0) translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.2) translateY(-200px);
-                opacity: 0;
-            }
-        }
-
-        /* Message */
-        #msg {
-            margin-top: 20px;
-            font-size: 20px;
-            min-height: 40px;
-        }
-
-        /* Button */
-        .next-btn {
-            margin-top: 20px;
-            display: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            #avatar {
-                width: 160px;
-            }
-
-            #msg {
-                font-size: 18px;
-                padding: 0 10px;
-            }
-        }
-    </style>
 </head>
-
 <body>
 
-    <div class="container fade-in">
-        <h1>Tap Me 🍫❤️</h1>
-        <p>Every touch = chocolate for you 💖</p>
+<div class="container">
+    <h1>Tap Me 🍫❤️</h1>
+    <p>Every touch = chocolate for you 💖</p>
+    <img id="avatar" src="standing.png" width="220" onclick="giveChocolate()">
+    <p id="msg"></p>
+    <button id="nextBtn" class="btn" data-link="memories.html" style="display:none;">
+        See Our Memories 💖
+    </button>
+</div>
 
-        <!-- Avatar -->
-        <img id="avatar" src="standing.png" alt="Avatar" onclick="giveChocolate()">
+<script src="script.js"></script>
+<script>
+const messages = [
+    "You are my sweetest chocolate 😍",
+    "I love you more than chocolate 🍫❤️",
+    "You are my happiness 🥺",
+    "You make my life beautiful 💖",
+    "You are my favorite person ❤️"
+];
 
-        <!-- Message -->
-        <p id="msg"></p>
+function giveChocolate() {
+    const avatar = document.getElementById("avatar");
+    const choco = document.createElement("img");
 
-        <!-- Next Button -->
-        <button class="next-btn btn" data-link="memories.html" id="nextBtn">
-            See Our Memories 💖
-        </button>
-    </div>
+    avatar.src = "give-chocolate.png";
+    choco.src = "chocolate.png";
+    choco.style.position = "absolute";
+    choco.style.width = "80px";
+    choco.style.left = Math.random() * 80 + "%";
+    choco.style.top = "60%";
 
-    <!-- Global Script -->
-    <script src="script.js"></script>
+    document.body.appendChild(choco);
+    setTimeout(() => choco.remove(), 2000);
+    setTimeout(() => avatar.src = "standing.png", 800);
 
-    <!-- Page Script -->
-    <script>
-        const messages = [
-            "You are my sweetest chocolate 😍",
-            "I love you more than chocolate 🍫❤️",
-            "You are my happiness 🥺",
-            "You make my life beautiful 💖",
-            "You are my favorite person ❤️"
-        ];
+    document.getElementById("msg").innerText =
+        messages[Math.floor(Math.random() * messages.length)];
 
-        function giveChocolate() {
-            const avatar = document.getElementById("avatar");
-            const nextBtn = document.getElementById("nextBtn");
-
-            // Change avatar
-            avatar.src = "give-chocolate.png";
-
-            // Create chocolate image
-            const choco = document.createElement("img");
-            choco.src = "chocolate.png";
-            choco.classList.add("choco");
-
-            choco.style.left = Math.random() * 80 + "%";
-            choco.style.top = "60%";
-
-            document.body.appendChild(choco);
-
-            // Remove chocolate after animation
-            setTimeout(() => choco.remove(), 2000);
-
-            // Reset avatar
-            setTimeout(() => {
-                avatar.src = "standing.png";
-            }, 800);
-
-            // Show message
-            document.getElementById("msg").innerText =
-                messages[Math.floor(Math.random() * messages.length)];
-
-            // Reveal next button
-            nextBtn.style.display = "inline-block";
-        }
-    </script>
-
+    document.getElementById("nextBtn").style.display = "inline-block";
+}
+</script>
 </body>
 </html>
