@@ -1,283 +1,274 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Final Birthday Surprise 🎂</title>
-<link rel="stylesheet" href="style.css">
+    <title>Final Birthday Surprise 🎂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    color: white;
-    overflow-x: hidden;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
 
-h1 {
-    margin-top: 20px;
-    font-size: 32px;
-}
+        h1 {
+            margin-top: 20px;
+            font-size: 26px;
+        }
 
-/* Scene Layout */
-.scene {
-    position: relative;
-    height: 75vh;
-    width: 100%;
-}
+        .scene {
+            position: relative;
+            height: 70vh;
+        }
 
-/* Avatars */
-.avatar {
-    position: absolute;
-    bottom: 0;
-    transition: all 1.5s ease-in-out;
-}
+        /* Avatar Styling */
+        .avatar {
+            position: absolute;
+            bottom: 0;
+            width: auto;
+        }
 
-#hero {
-    width: 200px;
-    left: -40%;
-}
+        /* Your Avatar with Cake */
+        #hero {
+            height: 240px;
+            left: -250px;
+            animation: walkIn 3s forwards;
+        }
 
-.walk-in {
-    left: 10%;
-}
+        /* Dancing Avatar */
+        #danceAvatar {
+            height: 160px;
+            left: 5%;
+            display: none;
+            animation: dance 0.6s infinite alternate;
+        }
 
-#gf {
-    width: 320px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-}
+        /* Stitch */
+        #stitch {
+            height: 170px;
+            right: 5%;
+            display: none;
+            animation: dance 0.6s infinite alternate;
+        }
 
-/* Cake Container */
-#cake-container {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 220px;
-    display: none;
-    cursor: pointer;
-}
+        /* Girlfriend Avatar */
+        #gf {
+            height: 230px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            animation: fadeIn 1.5s ease forwards;
+        }
 
-/* Whole Cake */
-.cake-base {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
-}
+        /* Cake */
+        #cakeContainer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 200px;
+            display: none;
+        }
 
-/* Candle */
-#candle {
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 34px;
-}
+        #cake {
+            width: 220px;
+            transition: transform 0.5s ease;
+        }
 
-/* Knife */
-#knife {
-    position: absolute;
-    font-size: 50px;
-    display: none;
-    pointer-events: none;
-    transform: rotate(-45deg);
-    z-index: 10;
-}
+        #cake.slice {
+            transform: rotate(-10deg) scale(0.9);
+        }
 
-/* Cake Slices */
-.slice {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
-    opacity: 0;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-}
+        #candle {
+            font-size: 32px;
+            margin-bottom: -10px;
+        }
 
-.slice1 { clip-path: polygon(50% 50%, 50% 0%, 65% 0%, 55% 50%); }
-.slice2 { clip-path: polygon(50% 50%, 65% 0%, 100% 50%, 60% 55%); }
-.slice3 { clip-path: polygon(50% 50%, 100% 50%, 75% 100%, 55% 60%); }
-.slice4 { clip-path: polygon(50% 50%, 75% 100%, 25% 100%, 45% 60%); }
-.slice5 { clip-path: polygon(50% 50%, 25% 100%, 0% 50%, 40% 55%); }
-.slice6 { clip-path: polygon(50% 50%, 0% 50%, 35% 0%, 45% 50%); }
+        /* Buttons */
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #ff4f81;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
-.slice.cut {
-    opacity: 1;
-    transform: translate(40px, -40px) rotate(12deg);
-}
+        button:hover {
+            background: #ffe6ec;
+        }
 
-/* Message */
-#message {
-    font-size: 22px;
-    margin-top: 15px;
-}
+        /* Wish Box */
+        #wishBox {
+            display: none;
+            margin-top: 15px;
+        }
 
-/* Final Text */
-#finalText {
-    display: none;
-    font-size: 60px;
-    font-weight: bold;
-    text-shadow: 0 0 10px #fff,
-                 0 0 20px #ff4d6d,
-                 0 0 40px #ff4d6d;
-    animation: zoomIn 1.5s ease-in-out forwards;
-}
+        input {
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            width: 260px;
+            text-align: center;
+            font-size: 16px;
+        }
 
-@keyframes zoomIn {
-    from { transform: scale(0); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
+        /* Animations */
+        @keyframes walkIn {
+            to {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
 
-/* Fireworks */
-.firework {
-    position: fixed;
-    font-size: 24px;
-    animation: explode 1.2s ease-out forwards;
-}
+        @keyframes dance {
+            from { transform: translateY(0) rotate(-5deg); }
+            to { transform: translateY(-12px) rotate(5deg); }
+        }
 
-@keyframes explode {
-    from { transform: scale(0); opacity: 1; }
-    to { transform: scale(2); opacity: 0; }
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 30px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
 
-/* Responsive */
-@media (max-width: 768px) {
-    #hero { width: 140px; }
-    #gf { width: 220px; }
-    #cake-container {
-        width: 220px;
-        height: 220px;
-        bottom: 180px;
-    }
-    #finalText { font-size: 36px; }
-}
-</style>
+        /* Hearts */
+        .heart {
+            position: absolute;
+            font-size: 22px;
+            animation: floatUp 3s linear forwards;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-250px); opacity: 0; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 22px; }
+
+            #hero { height: 180px; }
+            #gf { height: 170px; }
+            #danceAvatar { height: 120px; }
+            #stitch { height: 130px; }
+
+            #cake { width: 170px; }
+            #cakeContainer { bottom: 160px; }
+
+            input { width: 220px; }
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>🎉 Happy Birthday My Love ❤️</h1>
+<h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
 
 <div class="scene">
-    <!-- Your Avatar -->
+
+    <!-- Hero Avatar with Cake -->
     <img id="hero" src="cake.png" class="avatar" alt="Hero with Cake">
+
+    <!-- Dancing Avatar -->
+    <img id="danceAvatar" src="dance.png" class="avatar" alt="Dancing Avatar">
+
+    <!-- Stitch -->
+    <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
 
     <!-- Girlfriend Avatar -->
     <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
 
-    <!-- Cake -->
-    <div id="cake-container">
+    <!-- Big Cake -->
+    <div id="cakeContainer">
         <div id="candle">🕯️</div>
-        <div id="knife">🔪</div>
-        <div class="cake-base"></div>
-
-        <!-- Cake Slices -->
-        <div class="slice slice1"></div>
-        <div class="slice slice2"></div>
-        <div class="slice slice3"></div>
-        <div class="slice slice4"></div>
-        <div class="slice slice5"></div>
-        <div class="slice slice6"></div>
+        <img id="cake" src="cake2.png" alt="Birthday Cake">
     </div>
+
+</div>
+
+<!-- Controls -->
+<div id="controls">
+    <button id="blowBtn" style="display:none;" onclick="blowCandle()">Blow Candle 🕯️</button>
+    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
+    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
+</div>
+
+<!-- Wish Box -->
+<div id="wishBox">
+    <input type="text" id="wishInput" placeholder="Type your wish...">
+    <br><br>
+    <button onclick="saveWish()">Submit Wish ✨</button>
 </div>
 
 <p id="message"></p>
-<h2 id="finalText">🎉 HAPPY BIRTHDAY MY LOVE ❤️🎂</h2>
-
-<script src="script.js"></script>
 
 <script>
-const hero = document.getElementById("hero");
-const gf = document.getElementById("gf");
-const cakeContainer = document.getElementById("cake-container");
-const knife = document.getElementById("knife");
-const candle = document.getElementById("candle");
-const message = document.getElementById("message");
-const finalText = document.getElementById("finalText");
-const slices = document.querySelectorAll(".slice");
+    // Step 1: Show dancers
+    setTimeout(() => {
+        document.getElementById("danceAvatar").style.display = "block";
+        document.getElementById("stitch").style.display = "block";
+    }, 3000);
 
-let currentSlice = 0;
+    // Step 2: Show girlfriend
+    setTimeout(() => {
+        document.getElementById("gf").style.display = "block";
+    }, 5000);
 
-/* Step 1: Hero enters with cake */
-setTimeout(() => {
-    hero.classList.add("walk-in");
-}, 500);
+    // Step 3: Show cake and blow button
+    setTimeout(() => {
+        document.getElementById("cakeContainer").style.display = "block";
+        document.getElementById("blowBtn").style.display = "inline-block";
+    }, 7000);
 
-/* Step 2: Girlfriend appears */
-setTimeout(() => {
-    gf.style.display = "block";
-}, 2000);
-
-/* Step 3: Cake appears */
-setTimeout(() => {
-    cakeContainer.style.display = "block";
-    message.innerText = "Blow the candle, my love 💖";
-}, 3500);
-
-/* Blow Candle */
-candle.addEventListener("click", () => {
-    candle.style.display = "none";
-    message.innerText = "Tap the cake to cut it! 🎂";
-});
-
-/* Cut Cake One Slice at a Time */
-cakeContainer.addEventListener("click", (e) => {
-    if (candle.style.display !== "none") return;
-    if (currentSlice >= slices.length) return;
-
-    const rect = cakeContainer.getBoundingClientRect();
-    knife.style.left = (e.clientX - rect.left - 25) + "px";
-    knife.style.top = (e.clientY - rect.top - 25) + "px";
-    knife.style.display = "block";
-
-    const slice = slices[currentSlice];
-    slice.classList.add("cut");
-
-    currentSlice++;
-
-    if (currentSlice === slices.length) {
-        setTimeout(showCelebration, 800);
+    function blowCandle() {
+        document.getElementById("candle").style.display = "none";
+        document.getElementById("blowBtn").style.display = "none";
+        document.getElementById("wishBtn").style.display = "inline-block";
     }
-});
 
-/* Celebration Effects */
-function showCelebration() {
-    message.innerText = "Happy Birthday My Love ❤️🎂";
-    finalText.style.display = "block";
-    launchHearts(40);
-    launchFireworks(30);
-}
-
-/* Hearts Animation */
-function launchHearts(count) {
-    for (let i = 0; i < count; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "0";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
+    function showWish() {
+        document.getElementById("wishBtn").style.display = "none";
+        document.getElementById("wishBox").style.display = "block";
     }
-}
 
-/* Fireworks Animation */
-function launchFireworks(count) {
-    for (let i = 0; i < count; i++) {
-        const fire = document.createElement("div");
-        fire.className = "firework";
-        fire.innerHTML = "✨";
-        fire.style.left = Math.random() * 100 + "vw";
-        fire.style.top = Math.random() * 60 + "vh";
-        document.body.appendChild(fire);
-        setTimeout(() => fire.remove(), 1200);
+    function saveWish() {
+        const wish = document.getElementById("wishInput").value.trim();
+
+        if (wish === "") {
+            alert("Please enter your wish 💖");
+            return;
+        }
+
+        document.getElementById("wishBox").style.display = "none";
+        document.getElementById("message").innerText =
+            "Her Wish: " + wish + " 💖";
+
+        document.getElementById("cutBtn").style.display = "inline-block";
     }
-}
+
+    function cutCake() {
+        document.getElementById("cake").classList.add("slice");
+        document.getElementById("message").innerText =
+            "Happy Birthday My Love ❤️🎂";
+        launchHearts();
+    }
+
+    function launchHearts() {
+        for (let i = 0; i < 40; i++) {
+            let heart = document.createElement("div");
+            heart.innerHTML = "💖";
+            heart.className = "heart";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.bottom = "100px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    }
 </script>
 
 </body>
