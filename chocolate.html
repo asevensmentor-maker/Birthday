@@ -1,106 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<title>For You 🍫💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🍫💖</title>
 
-<style>
-body {
-  margin:0;
-  background: linear-gradient(to bottom, #3e2723, #1b0f0a);
-  color:white;
-  text-align:center;
-  font-family: Arial;
-  overflow:hidden;
-}
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="style.css">
 
-/* AVATAR */
-#avatar {
-  width:220px;
-  margin-top:50px;
-  cursor:pointer;
-  transition: transform 0.2s;
-}
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(to bottom, #3e2723, #1b0f0a);
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
 
-#avatar:active {
-  transform: scale(1.05);
-}
+        h1 {
+            margin-top: 20px;
+        }
 
-/* CHOCOLATE IMAGE */
-.choco {
-  position:absolute;
-  width:80px;
-  animation: pop 2s ease forwards;
-}
+        /* Container */
+        .container {
+            padding: 20px;
+        }
 
-@keyframes pop {
-  0% { transform: scale(0) translateY(0); opacity:1; }
-  100% { transform: scale(1.2) translateY(-200px); opacity:0; }
-}
+        /* Avatar */
+        #avatar {
+            width: 220px;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-/* MESSAGE */
-#msg {
-  margin-top:20px;
-  font-size:20px;
-}
-</style>
+        #avatar:active {
+            transform: scale(1.05);
+        }
 
+        /* Chocolate Animation */
+        .choco {
+            position: absolute;
+            width: 80px;
+            animation: pop 2s ease forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2) translateY(-200px);
+                opacity: 0;
+            }
+        }
+
+        /* Message */
+        #msg {
+            margin-top: 20px;
+            font-size: 20px;
+            min-height: 40px;
+        }
+
+        /* Button */
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #avatar {
+                width: 160px;
+            }
+
+            #msg {
+                font-size: 18px;
+                padding: 0 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <script src="script.js"></script>
 
-<h1>Tap Me 🍫❤️</h1>
-<p>Every touch = chocolate for you 💖</p>
+    <div class="container fade-in">
+        <h1>Tap Me 🍫❤️</h1>
+        <p>Every touch = chocolate for you 💖</p>
 
-<!-- AVATAR -->
-<img id="avatar" src="standing.png" onclick="giveChocolate()">
+        <!-- Avatar -->
+        <img id="avatar" src="standing.png" alt="Avatar" onclick="giveChocolate()">
 
-<p id="msg"></p>
+        <!-- Message -->
+        <p id="msg"></p>
 
-<script>
+        <!-- Next Button -->
+        <button class="next-btn btn" data-link="memories.html" id="nextBtn">
+            See Our Memories 💖
+        </button>
+    </div>
 
-const messages = [
-  "You are my sweetest chocolate 😍",
-  "I love you more than chocolate 🍫❤️",
-  "You are my happiness 🥺",
-  "You make my life beautiful 💖",
-  "You are my favorite person ❤️"
-];
+    <!-- Global Script -->
+    <script src="script.js"></script>
 
-function giveChocolate(){
+    <!-- Page Script -->
+    <script>
+        const messages = [
+            "You are my sweetest chocolate 😍",
+            "I love you more than chocolate 🍫❤️",
+            "You are my happiness 🥺",
+            "You make my life beautiful 💖",
+            "You are my favorite person ❤️"
+        ];
 
-  const avatar = document.getElementById("avatar");
+        function giveChocolate() {
+            const avatar = document.getElementById("avatar");
+            const nextBtn = document.getElementById("nextBtn");
 
-  // CHANGE AVATAR (GIVING)
-  avatar.src = "give-chocolate.png";
+            // Change avatar
+            avatar.src = "give-chocolate.png";
 
-  // CREATE REAL CHOCOLATE IMAGE
-  const choco = document.createElement("img");
-  choco.src = "chocolate.png";  // your Dairy Milk image
-  choco.classList.add("choco");
+            // Create chocolate image
+            const choco = document.createElement("img");
+            choco.src = "chocolate.png";
+            choco.classList.add("choco");
 
-  choco.style.left = Math.random()*80 + "%";
-  choco.style.top = "60%";
+            choco.style.left = Math.random() * 80 + "%";
+            choco.style.top = "60%";
 
-  document.body.appendChild(choco);
+            document.body.appendChild(choco);
 
-  // REMOVE AFTER ANIMATION
-  setTimeout(()=>choco.remove(),2000);
+            // Remove chocolate after animation
+            setTimeout(() => choco.remove(), 2000);
 
-  // CHANGE BACK TO NORMAL
-  setTimeout(()=>{
-    avatar.src = "standing.png";
-  },800);
+            // Reset avatar
+            setTimeout(() => {
+                avatar.src = "standing.png";
+            }, 800);
 
-  // SHOW MESSAGE
-  document.getElementById("msg").innerText =
-    messages[Math.floor(Math.random()*messages.length)];
-}
-<button data-link="memories.html">See Our Memories 💖</button>
-</button>
-</script>
+            // Show message
+            document.getElementById("msg").innerText =
+                messages[Math.floor(Math.random() * messages.length)];
+
+            // Reveal next button
+            nextBtn.style.display = "inline-block";
+        }
+    </script>
 
 </body>
 </html>
