@@ -1,259 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Happy Birthday My Love 💖</title>
+    <title>Final Birthday Surprise 🎂</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Premium Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* Screen Control */
-        .screen { display: none; }
-        .active { display: block; }
-
-        h1, h2, p {
-            margin-top: 15px;
-        }
-
-        /* Game Layout */
-        .game {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        /* Characters */
-        .character {
-            width: 140px;
-            transition: all 0.3s ease;
-        }
-
-        /* Attack Animations */
-        .attack-left {
-            transform: translateX(80px) scale(1.1);
-            z-index: 2;
-        }
-
-        .attack-right {
-            transform: translateX(-80px) scale(1.1);
-            z-index: 2;
-        }
-
-        .hit {
-            transform: scale(0.85);
-            filter: brightness(0.7);
-        }
-
-        /* Health Bars */
-        .bar {
-            width: 140px;
-            height: 14px;
-            background: #ffffff;
-            border-radius: 10px;
-            margin: 10px auto;
-            overflow: hidden;
-        }
-
-        .hp {
-            height: 100%;
-            background: linear-gradient(to right, #ff4d6d, #ff758c);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        /* Running Button */
-        .run-btn {
-            position: relative;
-        }
-
-        /* Container Styling */
-        .container-box {
-            padding: 20px;
-            margin: 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .character {
-                width: 110px;
-            }
-
-            .game {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            h2 {
-                font-size: 18px;
-            }
-        }
-    </style>
 </head>
-
 <body>
 
-    <!-- SCREEN 1 -->
-    <div id="screen1" class="screen active">
-        <div class="container-box">
-            <h1>🎉 Happy Birthday My Love ❤️</h1>
-            <p>Are you ready for your surprise?</p>
-            <button onclick="go(2)">Yes 💖</button>
-            <button class="run-btn" onmouseover="run(this)">No 😜</button>
-        </div>
-    </div>
+<div class="container">
+    <h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
+    <img src="cake2.png" width="220">
+    <p>May your day be filled with love, joy, and happiness! 💖</p>
 
-    <!-- SCREEN 2 -->
-    <div id="screen2" class="screen">
-        <div class="container-box">
-            <h2>🎮 Enter the Fight Arena</h2>
-            <p>Fight for her heart and prove your love! 💕</p>
-            <button onclick="go(3)">Start Battle 💥</button>
-        </div>
-    </div>
+    <input type="text" id="wish" placeholder="Make a wish..." style="padding:10px;border-radius:20px;border:none;">
+    <br><br>
+    <button class="btn" onclick="showWish()">Submit Wish ✨</button>
+    <p id="output"></p>
+</div>
 
-    <!-- SCREEN 3: GAME -->
-    <div id="screen3" class="screen">
-        <div class="container-box">
-            <h2>💖 Fight for Her Heart 💖</h2>
-
-            <div class="game">
-                <!-- YOU -->
-                <div>
-                    <img id="you" src="avatar.png" class="character" alt="You">
-                    <p>You ❤️</p>
-                    <div class="bar">
-                        <div id="youHP" class="hp" style="width:100%"></div>
-                    </div>
-                </div>
-
-                <!-- STITCH -->
-                <div>
-                    <img id="stitch" src="stitch.png" class="character" alt="Stitch">
-                    <p>Stitch 🧸</p>
-                    <div class="bar">
-                        <div id="stitchHP" class="hp" style="width:100%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="attack()">Attack 👊</button>
-            <button onclick="power()">Power 💥</button>
-        </div>
-    </div>
-
-    <!-- SCREEN 4 -->
-    <div id="screen4" class="screen">
-        <div class="container-box">
-            <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
-            <p>But you are my everything 💖</p>
-            <button data-link="chocolate.html">Next Surprise 🍫</button>
-        </div>
-    </div>
-
-    <!-- External Script -->
-    <script src="script.js"></script>
-
-    <!-- Game Script -->
-    <script>
-        function go(n) {
-            document.querySelectorAll('.screen').forEach(s =>
-                s.classList.remove('active')
-            );
-            document.getElementById('screen' + n).classList.add('active');
-        }
-
-        function run(btn) {
-            btn.style.position = 'absolute';
-            btn.style.left = Math.random() * 70 + "vw";
-            btn.style.top = Math.random() * 50 + "vh";
-        }
-
-        let you = 100;
-        let stitch = 100;
-
-        function update() {
-            document.getElementById("youHP").style.width = you + "%";
-            document.getElementById("stitchHP").style.width = stitch + "%";
-        }
-
-        function attack() {
-            const youChar = document.getElementById("you");
-            const stitchChar = document.getElementById("stitch");
-
-            youChar.classList.add("attack-left");
-            stitchChar.classList.add("attack-right");
-
-            setTimeout(() => {
-                stitchChar.classList.add("hit");
-            }, 150);
-
-            setTimeout(() => {
-                youChar.classList.remove("attack-left");
-                stitchChar.classList.remove("attack-right", "hit");
-            }, 400);
-
-            stitch -= Math.floor(Math.random() * 15) + 10;
-            you -= Math.floor(Math.random() * 8);
-
-            if (stitch < 0) stitch = 0;
-            if (you < 0) you = 0;
-
-            update();
-            check();
-        }
-
-        function power() {
-            const youChar = document.getElementById("you");
-            const stitchChar = document.getElementById("stitch");
-
-            youChar.classList.add("attack-left");
-            stitchChar.classList.add("attack-right");
-
-            setTimeout(() => {
-                stitchChar.classList.add("hit");
-            }, 150);
-
-            setTimeout(() => {
-                youChar.classList.remove("attack-left");
-                stitchChar.classList.remove("attack-right", "hit");
-            }, 400);
-
-            stitch -= Math.floor(Math.random() * 25) + 20;
-            you -= Math.floor(Math.random() * 12);
-
-            if (stitch < 0) stitch = 0;
-            if (you < 0) you = 0;
-
-            update();
-            check();
-        }
-
-        function check() {
-            if (stitch <= 0) {
-                setTimeout(() => go(4), 500);
-            }
-
-            if (you <= 0) {
-                alert("Stitch wins 😅 Try again!");
-                location.reload();
-            }
-        }
-    </script>
-
+<script src="script.js"></script>
+<script>
+function showWish() {
+    const wish = document.getElementById("wish").value;
+    if (wish.trim() === "") {
+        alert("Please enter your wish 💖");
+        return;
+    }
+    document.getElementById("output").innerHTML =
+        "Her Wish: 💕 " + wish;
+}
+</script>
 </body>
 </html>
