@@ -152,3 +152,157 @@ h1, h2, p {
     #cake { width: 180px; }
     h1 { font-size: 22px; }
 }
+/* =========================================
+   FINAL BIRTHDAY PAGE STYLES
+   ========================================= */
+
+/* Ensure the scene positions elements correctly */
+.scene {
+    position: relative;
+    min-height: 80vh;
+}
+
+/* Girlfriend Avatar - Increased Size */
+#gf {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    max-width: none; /* Override .avatar rule */
+    display: none;
+    z-index: 2;
+}
+
+/* Hero Avatar with Cake */
+#hero {
+    position: absolute;
+    bottom: 0;
+    left: -40%;
+    width: 200px;
+    max-width: none;
+    transition: left 1.5s ease-in-out;
+    z-index: 2;
+}
+
+/* Animation for hero entry */
+.walk-in {
+    left: 10%;
+}
+
+/* Cake Container */
+#cake-container {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 220px;
+    display: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Whole Cake Base */
+.cake-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('cake2.png') center/cover no-repeat;
+}
+
+/* Candle */
+#candle {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+}
+
+/* Cake Slice */
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('cake2.png') center/cover no-repeat;
+    clip-path: polygon(50% 50%, 60% 0%, 75% 0%, 55% 55%);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.slice.cut {
+    opacity: 1;
+    transform: translate(40px, -40px) rotate(12deg);
+}
+
+/* Knife Animation */
+#knife {
+    position: absolute;
+    font-size: 50px;
+    display: none;
+    pointer-events: none;
+    transform: rotate(-45deg);
+    z-index: 10;
+}
+
+/* Firework Effect */
+.firework {
+    position: fixed;
+    font-size: 24px;
+    animation: explode 1.2s ease-out forwards;
+    z-index: 999;
+}
+
+@keyframes explode {
+    from {
+        transform: scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Large Birthday Message */
+#finalText {
+    display: none;
+    font-size: 60px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px #fff,
+                 0 0 20px #ff4081,
+                 0 0 40px #ff4081;
+    animation: zoomIn 1.5s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive for Final Page */
+@media (max-width: 768px) {
+    #hero {
+        width: 140px;
+    }
+
+    #gf {
+        width: 200px;
+    }
+
+    #cake-container {
+        width: 220px;
+        height: 220px;
+        bottom: 180px;
+    }
+
+    #finalText {
+        font-size
