@@ -11,8 +11,8 @@
             margin: 0;
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #ff758c, #ff7eb3);
-            color: white;
             text-align: center;
+            color: white;
             overflow-x: hidden;
         }
 
@@ -21,24 +21,65 @@
             font-size: 26px;
         }
 
-        /* Main Layout */
         .scene {
-            max-width: 900px;
-            margin: auto;
-            padding: 10px;
+            position: relative;
+            height: 75vh;
+            width: 100%;
+            overflow: hidden;
         }
 
-        /* Candle */
-        #candle {
-            font-size: 30px;
-            margin-bottom: -10px;
+        /* Characters */
+        .avatar {
+            position: absolute;
+            bottom: 0;
+            transition: all 2s ease;
+        }
+
+        #hero {
+            left: -40%;
+            width: 160px;
+        }
+
+        #stitch {
+            right: -40%;
+            width: 160px;
+        }
+
+        #gf {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            display: none;
+        }
+
+        /* Walking Animation */
+        .walk-in-left {
+            left: 20%;
+        }
+
+        .walk-in-right {
+            right: 20%;
+        }
+
+        .exit-left {
+            left: -50%;
+        }
+
+        .exit-right {
+            right: -50%;
         }
 
         /* Cake */
+        #cakeContainer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 200px;
+            display: none;
+        }
+
         #cake {
-            width: 260px;
-            margin: 10px auto;
-            display: block;
+            width: 220px;
             transition: transform 0.5s ease;
         }
 
@@ -46,32 +87,9 @@
             transform: rotate(-10deg) scale(0.95);
         }
 
-        /* Characters */
-        .characters {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .avatar {
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-
-        /* Individual Sizes */
-        #hero {
-            width: 150px;
-        }
-
-        #gf {
-            width: 170px; /* Increased size */
-        }
-
-        #stitch {
-            width: 160px;
+        #candle {
+            font-size: 30px;
+            margin-bottom: -10px;
         }
 
         /* Buttons */
@@ -80,7 +98,7 @@
         }
 
         button {
-            padding: 14px 30px;
+            padding: 14px 28px;
             border: none;
             border-radius: 30px;
             background: linear-gradient(45deg, #ff4d6d, #ff85a2);
@@ -95,7 +113,6 @@
             transform: scale(1.05);
         }
 
-        /* Wish Box */
         #wishBox {
             display: none;
             margin-top: 15px;
@@ -107,10 +124,8 @@
             border: none;
             width: 260px;
             text-align: center;
-            font-size: 16px;
         }
 
-        /* Floating Hearts */
         .heart {
             position: fixed;
             font-size: 22px;
@@ -128,17 +143,9 @@
             }
         }
 
-        /* Responsive Design */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 22px;
-            }
-
-            #cake {
-                width: 200px;
-            }
-
-            #hero {
+            #hero, #stitch {
                 width: 120px;
             }
 
@@ -146,12 +153,12 @@
                 width: 140px;
             }
 
-            #stitch {
-                width: 130px;
+            #cake {
+                width: 180px;
             }
 
-            input {
-                width: 200px;
+            #cakeContainer {
+                bottom: 160px;
             }
         }
     </style>
@@ -162,34 +169,25 @@
 <h1>🎉 Happy Birthday My Love ❤️</h1>
 
 <div class="scene">
-    
-    <!-- Candle -->
-    <div id="candle">🕯️</div>
+    <!-- Your Avatar -->
+    <img id="hero" src="cake.png" class="avatar" alt="Hero">
+
+    <!-- Stitch -->
+    <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
+
+    <!-- Girlfriend -->
+    <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
 
     <!-- Cake -->
-    <img id="cake" src="cake2.png" alt="Birthday Cake">
-
-    <!-- Characters -->
-    <div class="characters">
-        <img id="hero" src="cake.png" class="avatar" alt="Hero">
-        <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
-        <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
+    <div id="cakeContainer">
+        <div id="candle">🕯️</div>
+        <img id="cake" src="cake2.png" alt="Birthday Cake">
     </div>
-
 </div>
 
-<!-- Controls -->
 <div class="controls">
-    <button id="blowBtn" onclick="blowCandle()">Blow Candle 🕯️</button>
-    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
+    <button id="blowBtn" style="display:none;" onclick="blowCandle()">Blow Candle 🕯️</button>
     <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
-</div>
-
-<!-- Wish Box -->
-<div id="wishBox">
-    <input type="text" id="wishInput" placeholder="Type your wish...">
-    <br><br>
-    <button onclick="saveWish()">Submit Wish ✨</button>
 </div>
 
 <p id="message"></p>
@@ -197,38 +195,46 @@
 <script src="script.js"></script>
 
 <script>
-function blowCandle() {
-    document.getElementById("candle").style.display = "none";
-    document.getElementById("blowBtn").style.display = "none";
-    document.getElementById("wishBtn").style.display = "inline-block";
-}
+    // Step 1: You walk in with cake
+    setTimeout(() => {
+        document.getElementById("hero").classList.add("walk-in-left");
+    }, 500);
 
-function showWish() {
-    document.getElementById("wishBox").style.display = "block";
-    document.getElementById("wishBtn").style.display = "none";
-}
+    // Step 2: Stitch enters
+    setTimeout(() => {
+        document.getElementById("stitch").classList.add("walk-in-right");
+    }, 2000);
 
-function saveWish() {
-    const wish = document.getElementById("wishInput").value.trim();
-    if (wish === "") {
-        alert("Please enter your wish 💖");
-        return;
+    // Step 3: Girlfriend appears
+    setTimeout(() => {
+        document.getElementById("gf").style.display = "block";
+    }, 4000);
+
+    // Step 4: Hero and Stitch exit
+    setTimeout(() => {
+        document.getElementById("hero").classList.add("exit-left");
+        document.getElementById("stitch").classList.add("exit-right");
+    }, 6000);
+
+    // Step 5: Cake appears
+    setTimeout(() => {
+        document.getElementById("cakeContainer").style.display = "block";
+        document.getElementById("blowBtn").style.display = "inline-block";
+    }, 8000);
+
+    function blowCandle() {
+        document.getElementById("candle").style.display = "none";
+        document.getElementById("blowBtn").style.display = "none";
+        document.getElementById("cutBtn").style.display = "inline-block";
+        document.getElementById("message").innerText = "Make a wish, my love 💖";
     }
 
-    document.getElementById("wishBox").style.display = "none";
-    document.getElementById("message").innerText =
-        "Her Wish: " + wish + " 💖";
-
-    document.getElementById("cutBtn").style.display = "inline-block";
-}
-
-function cutCake() {
-    document.getElementById("cake").classList.add("slice");
-    document.getElementById("message").innerText =
-        "Happy Birthday My Love ❤️🎂";
-
-    launchHearts(40);
-}
+    function cutCake() {
+        document.getElementById("cake").classList.add("slice");
+        document.getElementById("message").innerText =
+            "Happy Birthday My Love ❤️🎂";
+        launchHearts(40);
+    }
 </script>
 
 </body>
