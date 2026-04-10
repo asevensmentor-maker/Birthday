@@ -1,277 +1,259 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Final Birthday Surprise 🎂</title>
+    <meta charset="UTF-8">
+    <title>Happy Birthday My Love 💖</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Premium Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #ff758c, #ff7eb3);
-            color: white;
-            text-align: center;
-            overflow-x: hidden;
-        }
+        /* Screen Control */
+        .screen { display: none; }
+        .active { display: block; }
 
-        h1 {
-            margin-top: 20px;
-            font-size: 26px;
-        }
-
-        .scene {
-            position: relative;
-            height: 70vh;
-        }
-
-        /* Avatar Styling */
-        .avatar {
-            position: absolute;
-            bottom: 0;
-            width: auto;
-        }
-
-        /* Your Avatar with Cake */
-        #hero {
-            height: 1040px;
-            left: -20px;
-            bottom: 200px;
-            animation: walkIn 3s forwards;
-        }
-
-        /* Dancing Avatar */
-        #danceAvatar {
-            height: 160px;
-            left: 5%;
-            display: none;
-            animation: dance 0.6s infinite alternate;
-        }
-
-        /* Stitch */
-        #stitch {
-            height: 170px;
-            right: 5%;
-            display: none;
-            animation: dance 0.6s infinite alternate;
-        }
-
-        /* Girlfriend Avatar */
-        #gf {
-            height:1240px;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 300px;
-            display: none;
-            animation: fadeIn 1.5s ease forwards;
-        }
-
-        /* Cake */
-        #cakeContainer {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 400px;
-            display: none;
-        }
-
-        #cake {
-            width: 220px;
-            transition: transform 0.5s ease;
-        }
-
-        #cake.slice {
-            transform: rotate(-10deg) scale(0.9);
-        }
-
-        #candle {
-            font-size: 32px;
-            margin-bottom: -10px;
-        }
-
-        /* Buttons */
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            background: white;
-            color: #ff4f81;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        button:hover {
-            background: #ffe6ec;
-        }
-
-        /* Wish Box */
-        #wishBox {
-            display: none;
+        h1, h2, p {
             margin-top: 15px;
         }
 
-        input {
-            padding: 12px;
+        /* Game Layout */
+        .game {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        /* Characters */
+        .character {
+            width: 140px;
+            transition: all 0.3s ease;
+        }
+
+        /* Attack Animations */
+        .attack-left {
+            transform: translateX(80px) scale(1.1);
+            z-index: 2;
+        }
+
+        .attack-right {
+            transform: translateX(-80px) scale(1.1);
+            z-index: 2;
+        }
+
+        .hit {
+            transform: scale(0.85);
+            filter: brightness(0.7);
+        }
+
+        /* Health Bars */
+        .bar {
+            width: 140px;
+            height: 14px;
+            background: #ffffff;
+            border-radius: 10px;
+            margin: 10px auto;
+            overflow: hidden;
+        }
+
+        .hp {
+            height: 100%;
+            background: linear-gradient(to right, #ff4d6d, #ff758c);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Running Button */
+        .run-btn {
+            position: relative;
+        }
+
+        /* Container Styling */
+        .container-box {
+            padding: 20px;
+            margin: 20px;
             border-radius: 20px;
-            border: none;
-            width: 260px;
-            text-align: center;
-            font-size: 16px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animations */
-        @keyframes walkIn {
-            to {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes dance {
-            from { transform: translateY(0) rotate(-5deg); }
-            to { transform: translateY(-12px) rotate(5deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, 30px); }
-            to { opacity: 1; transform: translate(-50%, 0); }
-        }
-
-        /* Hearts */
-        .heart {
-            position: absolute;
-            font-size: 22px;
-            animation: floatUp 3s linear forwards;
-        }
-
-        @keyframes floatUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-250px); opacity: 0; }
-        }
-
-        /* Mobile Responsive */
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 22px; }
+            .character {
+                width: 110px;
+            }
 
-            #hero { height: 180px; }
-            #gf { height: 170px; }
-            #danceAvatar { height: 120px; }
-            #stitch { height: 130px; }
+            .game {
+                flex-direction: column;
+                gap: 20px;
+            }
 
-            #cake { width: 170px; }
-            #cakeContainer { bottom: 160px; }
+            h1 {
+                font-size: 22px;
+            }
 
-            input { width: 220px; }
+            h2 {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
-
-<div class="scene">
-
-    <!-- Hero Avatar with Cake -->
-    <img id="hero" src="cake.png" class="avatar" alt="Hero with Cake">
-
-    <!-- Dancing Avatar -->
-    <img id="danceAvatar" src="dance.png" class="avatar" alt="Dancing Avatar">
-
-    <!-- Stitch -->
-    <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
-
-    <!-- Girlfriend Avatar -->
-    <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
-
-    <!-- Big Cake -->
-    <div id="cakeContainer">
-        <div id="candle">🕯️</div>
-        <img id="cake" src="cake2.png" alt="Birthday Cake">
+    <!-- SCREEN 1 -->
+    <div id="screen1" class="screen active">
+        <div class="container-box">
+            <h1>🎉 Happy Birthday My Love ❤️</h1>
+            <p>Are you ready for your surprise?</p>
+            <button onclick="go(2)">Yes 💖</button>
+            <button class="run-btn" onmouseover="run(this)">No 😜</button>
+        </div>
     </div>
 
-</div>
+    <!-- SCREEN 2 -->
+    <div id="screen2" class="screen">
+        <div class="container-box">
+            <h2>🎮 Enter the Fight Arena</h2>
+            <p>Fight for her heart and prove your love! 💕</p>
+            <button onclick="go(3)">Start Battle 💥</button>
+        </div>
+    </div>
 
-<!-- Controls -->
-<div id="controls">
-    <button id="blowBtn" style="display:none;" onclick="blowCandle()">Blow Candle 🕯️</button>
-    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
-    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
-</div>
+    <!-- SCREEN 3: GAME -->
+    <div id="screen3" class="screen">
+        <div class="container-box">
+            <h2>💖 Fight for Her Heart 💖</h2>
 
-<!-- Wish Box -->
-<div id="wishBox">
-    <input type="text" id="wishInput" placeholder="Type your wish...">
-    <br><br>
-    <button onclick="saveWish()">Submit Wish ✨</button>
-</div>
+            <div class="game">
+                <!-- YOU -->
+                <div>
+                    <img id="you" src="avatar.png" class="character" alt="You">
+                    <p>You ❤️</p>
+                    <div class="bar">
+                        <div id="youHP" class="hp" style="width:100%"></div>
+                    </div>
+                </div>
 
-<p id="message"></p>
+                <!-- STITCH -->
+                <div>
+                    <img id="stitch" src="stitch.png" class="character" alt="Stitch">
+                    <p>Stitch 🧸</p>
+                    <div class="bar">
+                        <div id="stitchHP" class="hp" style="width:100%"></div>
+                    </div>
+                </div>
+            </div>
 
-<script>
-    // Step 1: Show dancers
-    setTimeout(() => {
-        document.getElementById("danceAvatar").style.display = "block";
-        document.getElementById("stitch").style.display = "block";
-    }, 3000);
+            <button onclick="attack()">Attack 👊</button>
+            <button onclick="power()">Power 💥</button>
+        </div>
+    </div>
 
-    // Step 2: Show girlfriend
-    setTimeout(() => {
-        document.getElementById("gf").style.display = "block";
-    }, 5000);
+    <!-- SCREEN 4 -->
+    <div id="screen4" class="screen">
+        <div class="container-box">
+            <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
+            <p>But you are my everything 💖</p>
+            <button data-link="chocolate.html">Next Surprise 🍫</button>
+        </div>
+    </div>
 
-    // Step 3: Show cake and blow button
-    setTimeout(() => {
-        document.getElementById("cakeContainer").style.display = "block";
-        document.getElementById("blowBtn").style.display = "inline-block";
-    }, 7000);
+    <!-- External Script -->
+    <script src="script.js"></script>
 
-    function blowCandle() {
-        document.getElementById("candle").style.display = "none";
-        document.getElementById("blowBtn").style.display = "none";
-        document.getElementById("wishBtn").style.display = "inline-block";
-    }
-
-    function showWish() {
-        document.getElementById("wishBtn").style.display = "none";
-        document.getElementById("wishBox").style.display = "block";
-    }
-
-    function saveWish() {
-        const wish = document.getElementById("wishInput").value.trim();
-
-        if (wish === "") {
-            alert("Please enter your wish 💖");
-            return;
+    <!-- Game Script -->
+    <script>
+        function go(n) {
+            document.querySelectorAll('.screen').forEach(s =>
+                s.classList.remove('active')
+            );
+            document.getElementById('screen' + n).classList.add('active');
         }
 
-        document.getElementById("wishBox").style.display = "none";
-        document.getElementById("message").innerText =
-            "Her Wish: " + wish + " 💖";
-
-        document.getElementById("cutBtn").style.display = "inline-block";
-    }
-
-    function cutCake() {
-        document.getElementById("cake").classList.add("slice");
-        document.getElementById("message").innerText =
-            "Happy Birthday My Love ❤️🎂";
-        launchHearts();
-    }
-
-    function launchHearts() {
-        for (let i = 0; i < 40; i++) {
-            let heart = document.createElement("div");
-            heart.innerHTML = "💖";
-            heart.className = "heart";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.bottom = "100px";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 3000);
+        function run(btn) {
+            btn.style.position = 'absolute';
+            btn.style.left = Math.random() * 70 + "vw";
+            btn.style.top = Math.random() * 50 + "vh";
         }
-    }
-</script>
+
+        let you = 100;
+        let stitch = 100;
+
+        function update() {
+            document.getElementById("youHP").style.width = you + "%";
+            document.getElementById("stitchHP").style.width = stitch + "%";
+        }
+
+        function attack() {
+            const youChar = document.getElementById("you");
+            const stitchChar = document.getElementById("stitch");
+
+            youChar.classList.add("attack-left");
+            stitchChar.classList.add("attack-right");
+
+            setTimeout(() => {
+                stitchChar.classList.add("hit");
+            }, 150);
+
+            setTimeout(() => {
+                youChar.classList.remove("attack-left");
+                stitchChar.classList.remove("attack-right", "hit");
+            }, 400);
+
+            stitch -= Math.floor(Math.random() * 15) + 10;
+            you -= Math.floor(Math.random() * 8);
+
+            if (stitch < 0) stitch = 0;
+            if (you < 0) you = 0;
+
+            update();
+            check();
+        }
+
+        function power() {
+            const youChar = document.getElementById("you");
+            const stitchChar = document.getElementById("stitch");
+
+            youChar.classList.add("attack-left");
+            stitchChar.classList.add("attack-right");
+
+            setTimeout(() => {
+                stitchChar.classList.add("hit");
+            }, 150);
+
+            setTimeout(() => {
+                youChar.classList.remove("attack-left");
+                stitchChar.classList.remove("attack-right", "hit");
+            }, 400);
+
+            stitch -= Math.floor(Math.random() * 25) + 20;
+            you -= Math.floor(Math.random() * 12);
+
+            if (stitch < 0) stitch = 0;
+            if (you < 0) you = 0;
+
+            update();
+            check();
+        }
+
+        function check() {
+            if (stitch <= 0) {
+                setTimeout(() => go(4), 500);
+            }
+
+            if (you <= 0) {
+                alert("Stitch wins 😅 Try again!");
+                location.reload();
+            }
+        }
+    </script>
 
 </body>
 </html>
