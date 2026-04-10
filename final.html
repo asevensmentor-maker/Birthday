@@ -1,34 +1,277 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Final Birthday Surprise 🎂</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Global Styles -->
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            margin-top: 15px;
+            font-size: 26px;
+        }
+
+        .scene {
+            position: relative;
+            height: 70vh;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Avatar Styling */
+        .avatar {
+            position: absolute;
+            bottom: 0;
+            height: 220px;
+            transition: all 1s ease;
+        }
+
+        /* Entry Avatar */
+        #hero {
+            left: -200px;
+            animation: walkIn 3s forwards;
+        }
+
+        /* Dancing Avatars */
+        #danceAvatar {
+            left: 5%;
+            display: none;
+            animation: dance 0.6s infinite alternate;
+        }
+
+        #stitch {
+            right: 5%;
+            display: none;
+            animation: dance 0.6s infinite alternate;
+        }
+
+        /* Girlfriend Avatar */
+        #gf {
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        /* Cake Section */
+        #cakeContainer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 170px;
+            display: none;
+        }
+
+        #cake {
+            width: 200px;
+            transition: transform 0.5s ease;
+        }
+
+        #cake.slice {
+            transform: rotate(-10deg) scale(0.9);
+        }
+
+        #candle {
+            font-size: 32px;
+            margin-bottom: -10px;
+        }
+
+        /* Buttons */
+        .controls button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #ff4f81;
+            font-size: 16px;
+            margin: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .controls button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Wish Box */
+        #wishBox {
+            display: none;
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            width: 260px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* Animations */
+        @keyframes walkIn {
+            to {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes dance {
+            from { transform: translateY(0) rotate(-5deg); }
+            to { transform: translateY(-12px) rotate(5deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 30px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: fixed;
+            font-size: 22px;
+            animation: floatUp 3s linear forwards;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-250px); opacity: 0; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 20px; }
+
+            .avatar { height: 140px; }
+
+            #cake { width: 140px; }
+
+            #cakeContainer { bottom: 120px; }
+
+            input { width: 200px; }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
-    <img src="cake2.png" width="220">
-    <p>May your day be filled with love, joy, and happiness! 💖</p>
+<h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
 
-    <input type="text" id="wish" placeholder="Make a wish..." style="padding:10px;border-radius:20px;border:none;">
-    <br><br>
-    <button class="btn" onclick="showWish()">Submit Wish ✨</button>
-    <p id="output"></p>
+<div class="scene">
+
+    <!-- Entry Avatar -->
+    <img id="hero" src="cake.png" class="avatar" alt="Hero with Cake">
+
+    <!-- Dancing Avatars -->
+    <img id="danceAvatar" src="dance.png" class="avatar" alt="Dancing Avatar">
+    <img id="stitch" src="stitch.png" class="avatar" alt="Stitch">
+
+    <!-- Girlfriend Avatar -->
+    <img id="gf" src="gf.png" class="avatar" alt="Girlfriend">
+
+    <!-- Cake -->
+    <div id="cakeContainer">
+        <div id="candle">🕯️</div>
+        <img id="cake" src="cake2.png" alt="Birthday Cake">
+    </div>
+
 </div>
 
+<!-- Controls -->
+<div class="controls">
+    <button id="blowBtn" style="display:none;" onclick="blowCandle()">Blow Candle 🕯️</button>
+    <button id="wishBtn" style="display:none;" onclick="showWish()">Make a Wish 💖</button>
+    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
+</div>
+
+<!-- Wish Box -->
+<div id="wishBox">
+    <input type="text" id="wishInput" placeholder="Type your wish...">
+    <br><br>
+    <button onclick="saveWish()">Submit Wish ✨</button>
+</div>
+
+<p id="message"></p>
+
+<!-- Global Script -->
 <script src="script.js"></script>
+
 <script>
-function showWish() {
-    const wish = document.getElementById("wish").value;
-    if (wish.trim() === "") {
-        alert("Please enter your wish 💖");
-        return;
+    // Step 1: Show dancers
+    setTimeout(() => {
+        document.getElementById("danceAvatar").style.display = "block";
+        document.getElementById("stitch").style.display = "block";
+    }, 3000);
+
+    // Step 2: Show girlfriend
+    setTimeout(() => {
+        document.getElementById("gf").style.display = "block";
+    }, 5000);
+
+    // Step 3: Show cake and blow button
+    setTimeout(() => {
+        document.getElementById("cakeContainer").style.display = "block";
+        document.getElementById("blowBtn").style.display = "inline-block";
+    }, 7000);
+
+    function blowCandle() {
+        document.getElementById("candle").style.display = "none";
+        document.getElementById("blowBtn").style.display = "none";
+        document.getElementById("wishBtn").style.display = "inline-block";
     }
-    document.getElementById("output").innerHTML =
-        "Her Wish: 💕 " + wish;
-}
+
+    function showWish() {
+        document.getElementById("wishBtn").style.display = "none";
+        document.getElementById("wishBox").style.display = "block";
+    }
+
+    function saveWish() {
+        const wish = document.getElementById("wishInput").value.trim();
+
+        if (wish === "") {
+            alert("Please enter your wish 💖");
+            return;
+        }
+
+        document.getElementById("wishBox").style.display = "none";
+        document.getElementById("message").innerText =
+            "Her Wish: " + wish + " 💖";
+
+        document.getElementById("cutBtn").style.display = "inline-block";
+    }
+
+    function cutCake() {
+        document.getElementById("cake").classList.add("slice");
+        document.getElementById("message").innerText =
+            "Happy Birthday My Love ❤️🎂";
+        launchHearts();
+    }
+
+    function launchHearts() {
+        for (let i = 0; i < 40; i++) {
+            let heart = document.createElement("div");
+            heart.innerHTML = "💖";
+            heart.className = "heart";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.bottom = "100px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    }
 </script>
+
 </body>
 </html>
