@@ -1,219 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-<title>Love Fight Game 💖</title>
-
-<style>
-body {
-  margin:0;
-  background: linear-gradient(to right, #ff758c, #ff7eb3);
-  color:white;
-  text-align:center;
-  font-family: Arial;
-}
-
-/* SCREENS */
-.screen { display:none; }
-.active { display:block; }
-
-/* BUTTON */
-button {
-  padding:12px 20px;
-  margin:10px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
-  font-size:16px;
-}
-
-/* GAME AREA */
-.game {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:50px;
-  padding: 0 40px;
-}
-
-/* CHARACTERS */
-.character {
-  width:160px;
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-/* CLOSE FIGHT */
-.attack-left {
-  transform: translateX(240px) scale(1.1);
-  z-index: 2;
-}
-
-.attack-right {
-  transform: translateX(-240px) scale(1.1);
-  z-index: 2;
-}
-
-/* HIT EFFECT */
-.hit {
-  transform: scale(0.85);
-  filter: brightness(0.8);
-}
-
-/* HEALTH BAR */
-.bar {
-  width:150px;
-  height:15px;
-  background:white;
-  border-radius:10px;
-  margin:10px auto;
-}
-
-.hp {
-  height:100%;
-  background:red;
-  border-radius:10px;
-}
-</style>
-
+    <title>Love Fight Game 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+<div class="container">
+    <h1>🎉 Happy Birthday My Love ❤️</h1>
+    <p>Are you ready for your surprise?</p>
+    <button class="btn" onclick="go(2)">Yes 💖</button>
+    <button class="btn" onmouseover="run(this)">No 😜</button>
+</div>
+
+<div id="screen2" class="container" style="display:none;">
+    <h2>Enter the Fight Arena 🎮</h2>
+    <button class="btn" onclick="go(3)">Start Battle 💥</button>
+</div>
+
+<div id="screen3" class="container" style="display:none;">
+    <h2>💖 Fight for Her Heart 💖</h2>
+
+    <div class="game">
+        <div>
+            <img id="you" src="avatar.png" class="character">
+            <p>You ❤️</p>
+            <div class="bar"><div id="youHP" class="hp" style="width:100%"></div></div>
+        </div>
+
+        <div>
+            <img id="stitch" src="stitch.png" class="character">
+            <p>Stitch 🧸</p>
+            <div class="bar"><div id="stitchHP" class="hp" style="width:100%"></div></div>
+        </div>
+    </div>
+
+    <button class="btn" onclick="attack()">Attack 👊</button>
+    <button class="btn" onclick="power()">Power 💥</button>
+</div>
+
+<div id="screen4" class="container" style="display:none;">
+    <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
+    <p>But you are my everything 💖</p>
+    <button class="btn" data-link="chocolate.html">Next Surprise 🍫</button>
+</div>
+
 <script src="script.js"></script>
-<!-- SCREEN 1 -->
-<div id="screen1" class="active">
-  <h1>Happy Birthday ❤️</h1>
-  <p>Are you ready for your surprise?</p>
-  <button onclick="go(2)">Yes 💖</button>
-  <button onmouseover="run(this)">No 😜</button>
-</div>
-
-<!-- SCREEN 2 -->
-<div id="screen2" class="screen">
-  <h2>Enter the Fight Arena 🎮</h2>
-  <button onclick="go(3)">Start Battle 💥</button>
-</div>
-
-<!-- SCREEN 3 GAME -->
-<div id="screen3" class="screen">
-
-  <h2>💖 Fight for Her Heart 💖</h2>
-
-  <div class="game">
-
-    <!-- YOU -->
-    <div>
-      <img id="you" src="avatar.png" class="character">
-      <p>You ❤️</p>
-      <div class="bar"><div id="youHP" class="hp" style="width:100%"></div></div>
-    </div>
-
-    <!-- STITCH -->
-    <div>
-      <img id="stitch" src="stitch.png" class="character">
-      <p>Stitch 🧸</p>
-      <div class="bar"><div id="stitchHP" class="hp" style="width:100%"></div></div>
-    </div>
-
-  </div>
-
-  <button onclick="attack()">Attack 👊</button>
-  <button onclick="power()">Power 💥</button>
-
-</div>
-
-<!-- SCREEN 4 -->
-<div id="screen4" class="screen">
-  <h1>🏆 I AM YOUR FAVORITE ❤️</h1>
-  <p>But you are my everything 💖</p>
-</div>
-
 <script>
-
-function go(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen'+n).classList.add('active');
+function go(n) {
+    document.querySelectorAll('.container').forEach(el => el.style.display = 'none');
+    document.getElementById('screen' + n).style.display = 'block';
 }
 
-function run(btn){
-  btn.style.position='absolute';
-  btn.style.left=Math.random()*300+'px';
+function run(btn) {
+    btn.style.position = 'absolute';
+    btn.style.left = Math.random() * 80 + 'vw';
+    btn.style.top = Math.random() * 80 + 'vh';
 }
 
-/* GAME LOGIC */
-let you = 100;
-let stitch = 100;
+let you = 100, stitch = 100;
 
-function update(){
-  document.getElementById("youHP").style.width = you + "%";
-  document.getElementById("stitchHP").style.width = stitch + "%";
+function update() {
+    youHP.style.width = you + "%";
+    stitchHP.style.width = stitch + "%";
 }
 
-function attack(){
-
-  const youChar = document.getElementById("you");
-  const stitchChar = document.getElementById("stitch");
-
-  // MOVE CLOSE (TOUCH)
-  youChar.classList.add("attack-left");
-  stitchChar.classList.add("attack-right");
-
-  setTimeout(()=>{
-    stitchChar.classList.add("hit");
-  },150);
-
-  setTimeout(()=>{
-    youChar.classList.remove("attack-left");
-    stitchChar.classList.remove("attack-right");
-    stitchChar.classList.remove("hit");
-  },400);
-
-  // DAMAGE
-  stitch -= Math.floor(Math.random()*15)+10;
-  you -= Math.floor(Math.random()*8);
-
-  update();
-  check();
+function attack() {
+    stitch -= 15;
+    you -= 5;
+    update();
+    check();
 }
 
-function power(){
-
-  const youChar = document.getElementById("you");
-  const stitchChar = document.getElementById("stitch");
-
-  youChar.classList.add("attack-left");
-  stitchChar.classList.add("attack-right");
-
-  setTimeout(()=>{
-    stitchChar.classList.add("hit");
-  },150);
-
-  setTimeout(()=>{
-    youChar.classList.remove("attack-left");
-    stitchChar.classList.remove("attack-right");
-    stitchChar.classList.remove("hit");
-  },400);
-
-  stitch -= Math.floor(Math.random()*25)+20;
-  you -= Math.floor(Math.random()*12);
-
-  update();
-  check();
+function power() {
+    stitch -= 25;
+    you -= 10;
+    update();
+    check();
 }
 
-function check(){
-  if(stitch <= 0){
-    go(4);
-  }
-  if(you <= 0){
-    alert("Stitch wins 😅 Try again!");
-    location.reload();
-  }
+function check() {
+    if (stitch <= 0) go(4);
+    if (you <= 0) location.reload();
 }
-
 </script>
-<button data-link="chocolate.html">Next Surprise 🍫</button>
-</button>
 </body>
 </html>
