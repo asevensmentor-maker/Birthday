@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+/* ================================
+   GLOBAL STYLES
+================================ */
 * {
     margin: 0;
     padding: 0;
@@ -30,6 +33,9 @@ h1, h2, p {
     margin: 15px 0;
 }
 
+/* ================================
+   BUTTON STYLES
+================================ */
 .btn {
     background: linear-gradient(45deg, #ff4d6d, #ff85a2);
     border: none;
@@ -47,7 +53,9 @@ h1, h2, p {
     transform: scale(1.05);
 }
 
-/* Fade Animations */
+/* ================================
+   FADE ANIMATIONS
+================================ */
 .fade-in {
     animation: fadeIn 1s ease-in-out;
 }
@@ -65,7 +73,9 @@ h1, h2, p {
     to { opacity: 0; }
 }
 
-/* Heart Rain */
+/* ================================
+   HEART RAIN EFFECT
+================================ */
 .heart {
     position: fixed;
     top: -10px;
@@ -82,7 +92,9 @@ h1, h2, p {
     }
 }
 
-/* Fight Game */
+/* ================================
+   FIGHT GAME STYLES
+================================ */
 .game {
     display: flex;
     justify-content: space-around;
@@ -122,72 +134,47 @@ h1, h2, p {
     border-radius: 10px;
 }
 
-/* Final Page */
-.scene {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.characters {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.avatar {
-    max-width: 160px;
-}
-
-#cake {
-    width: 250px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .character { width: 100px; }
-    .avatar { max-width: 120px; }
-    #cake { width: 180px; }
-    h1 { font-size: 22px; }
-}
-/* =========================================
+/* ================================
    FINAL BIRTHDAY PAGE STYLES
-   ========================================= */
+================================ */
 
-/* Ensure the scene positions elements correctly */
+/* Scene Layout */
 .scene {
     position: relative;
     min-height: 80vh;
 }
 
-/* Girlfriend Avatar - Increased Size */
-#gf {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    max-width: none; /* Override .avatar rule */
-    display: none;
-    z-index: 2;
+/* Avatar Defaults */
+.avatar {
+    max-width: 160px;
 }
 
-/* Hero Avatar with Cake */
-#hero {
+/* Override for Final Page */
+#hero, #gf {
+    max-width: none;
     position: absolute;
     bottom: 0;
-    left: -40%;
+}
+
+/* Hero Avatar */
+#hero {
     width: 200px;
-    max-width: none;
+    left: -40%;
     transition: left 1.5s ease-in-out;
     z-index: 2;
 }
 
-/* Animation for hero entry */
 .walk-in {
     left: 10%;
+}
+
+/* Girlfriend Avatar */
+#gf {
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: 2;
 }
 
 /* Cake Container */
@@ -203,7 +190,7 @@ h1, h2, p {
     z-index: 1;
 }
 
-/* Whole Cake Base */
+/* Whole Cake */
 .cake-base {
     position: absolute;
     width: 100%;
@@ -220,23 +207,12 @@ h1, h2, p {
     font-size: 32px;
 }
 
-/* Cake Slice */
-.slice {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
-    clip-path: polygon(50% 50%, 60% 0%, 75% 0%, 55% 55%);
-    opacity: 0;
-    transition: transform 0.6s ease, opacity 0.6s ease;
+/* Blow Candle Button */
+#blowBtn {
+    display: none;
 }
 
-.slice.cut {
-    opacity: 1;
-    transform: translate(40px, -40px) rotate(12deg);
-}
-
-/* Knife Animation */
+/* Knife */
 #knife {
     position: absolute;
     font-size: 50px;
@@ -244,6 +220,28 @@ h1, h2, p {
     pointer-events: none;
     transform: rotate(-45deg);
     z-index: 10;
+}
+
+/* Cake Slices */
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('cake2.png') center/cover no-repeat;
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.slice1 { clip-path: polygon(50% 50%, 50% 0%, 65% 0%, 55% 50%); }
+.slice2 { clip-path: polygon(50% 50%, 65% 0%, 100% 50%, 60% 55%); }
+.slice3 { clip-path: polygon(50% 50%, 100% 50%, 75% 100%, 55% 60%); }
+.slice4 { clip-path: polygon(50% 50%, 75% 100%, 25% 100%, 45% 60%); }
+.slice5 { clip-path: polygon(50% 50%, 25% 100%, 0% 50%, 40% 55%); }
+.slice6 { clip-path: polygon(50% 50%, 0% 50%, 35% 0%, 45% 50%); }
+
+.slice.cut {
+    opacity: 1;
+    transform: translate(40px, -40px) rotate(12deg);
 }
 
 /* Firework Effect */
@@ -265,7 +263,7 @@ h1, h2, p {
     }
 }
 
-/* Large Birthday Message */
+/* Final Birthday Message */
 #finalText {
     display: none;
     font-size: 60px;
@@ -288,15 +286,15 @@ h1, h2, p {
     }
 }
 
-/* Mobile Responsive for Final Page */
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
 @media (max-width: 768px) {
-    #hero {
-        width: 140px;
-    }
+    .character { width: 100px; }
+    .avatar { max-width: 120px; }
 
-    #gf {
-        width: 200px;
-    }
+    #hero { width: 140px; }
+    #gf { width: 200px; }
 
     #cake-container {
         width: 220px;
@@ -305,4 +303,10 @@ h1, h2, p {
     }
 
     #finalText {
-        font-size
+        font-size: 36px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
