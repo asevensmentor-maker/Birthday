@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container">
+<div id="screen1" class="container">
     <h1>🎉 Happy Birthday My Love ❤️</h1>
     <p>Are you ready for your surprise?</p>
     <button class="btn" onclick="go(2)">Yes 💖</button>
@@ -38,19 +38,13 @@
 
     <button class="btn" onclick="attack()">Attack 👊</button>
     <button class="btn" onclick="power()">Power 💥</button>
+</div>
 
- <!-- SCREEN 4 -->
-<div id="screen4" class="screen">
-  <h1>🏆 Yes! I Am Your Favorite ❤️</h1>
-  <p>But you are my everything 💖</p>
-
-  <!-- Victory Dance -->
-  <img id="victoryDance" src="dance.png" alt="Victory Dance">
-
-  <br>
-  <button class="btn" data-link="chocolate.html">
-    Next Surprise 🍫
-  </button>
+<div id="screen4" class="container" style="display:none;">
+    <h1>🏆 Yes! I Am Your Favorite ❤️</h1>
+    <img src="dance.png" width="200">
+    <br>
+    <button class="btn" data-link="chocolate.html">Next Surprise 🍫</button>
 </div>
 
 <script src="script.js"></script>
@@ -73,18 +67,35 @@ function update() {
     stitchHP.style.width = stitch + "%";
 }
 
-function attack() {
-    stitch -= 15;
-    you -= 5;
+function animate(damageToStitch, damageToYou) {
+    const youChar = document.getElementById("you");
+    const stitchChar = document.getElementById("stitch");
+
+    youChar.classList.add("attack-left");
+    stitchChar.classList.add("attack-right");
+
+    setTimeout(() => stitchChar.classList.add("hit"), 150);
+    setTimeout(() => {
+        youChar.classList.remove("attack-left");
+        stitchChar.classList.remove("attack-right", "hit");
+    }, 400);
+
+    stitch -= damageToStitch;
+    you -= damageToYou;
+
+    if (stitch < 0) stitch = 0;
+    if (you < 0) you = 0;
+
     update();
     check();
 }
 
+function attack() {
+    animate(Math.floor(Math.random()*15)+10, Math.floor(Math.random()*8));
+}
+
 function power() {
-    stitch -= 25;
-    you -= 10;
-    update();
-    check();
+    animate(Math.floor(Math.random()*25)+20, Math.floor(Math.random()*12));
 }
 
 function check() {
