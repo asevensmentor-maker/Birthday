@@ -10,7 +10,6 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
     text-align: center;
     color: white;
     overflow-x: hidden;
@@ -18,7 +17,7 @@ body {
 
 h1 {
     margin-top: 20px;
-    font-size: 26px;
+    font-size: 32px;
 }
 
 /* Scene Layout */
@@ -32,67 +31,58 @@ h1 {
 .avatar {
     position: absolute;
     bottom: 0;
-    transition: all 1.5s ease;
+    transition: all 1.5s ease-in-out;
 }
 
 #hero {
-    width: 160px;
+    width: 200px;
     left: -40%;
 }
 
+.walk-in {
+    left: 10%;
+}
+
 #gf {
-    width: 220px;
+    width: 320px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
-}
-
-.walk-in {
-    left: 20%;
 }
 
 /* Cake Container */
 #cake-container {
     position: absolute;
-    width: 260px;
-    height: 260px;
+    width: 300px;
+    height: 300px;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 200px;
+    bottom: 220px;
     display: none;
     cursor: pointer;
+}
+
+/* Whole Cake */
+.cake-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('cake2.png') center/cover no-repeat;
 }
 
 /* Candle */
 #candle {
     position: absolute;
-    top: -40px;
+    top: -45px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 30px;
+    font-size: 34px;
 }
 
-/* Cake Slices */
-.slice {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
-    transition: transform 0.8s ease;
-}
-
-/* Single Slice */
-.slice-main {
-    clip-path: polygon(50% 50%, 60% 0%, 75% 0%, 55% 55%);
-}
-
-.slice-rest {
-    clip-path: circle(50% at 50% 50%);
-}
-
-/* Cutting Animation */
-.cut .slice-main {
-    transform: translate(40px, -40px) rotate(15deg);
+/* Blow Candle Button */
+#blowBtn {
+    display: none;
+    margin-top: 10px;
 }
 
 /* Knife */
@@ -105,46 +95,72 @@ h1 {
     z-index: 10;
 }
 
-/* Button */
-button {
-    padding: 12px 28px;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(45deg, #ff4d6d, #ff85a2);
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+/* Cake Slices */
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('cake2.png') center/cover no-repeat;
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-/* Hearts */
-.heart {
-    position: fixed;
-    font-size: 22px;
-    animation: floatUp 3s linear forwards;
+.slice1 { clip-path: polygon(50% 50%, 50% 0%, 65% 0%, 55% 50%); }
+.slice2 { clip-path: polygon(50% 50%, 65% 0%, 100% 50%, 60% 55%); }
+.slice3 { clip-path: polygon(50% 50%, 100% 50%, 75% 100%, 55% 60%); }
+.slice4 { clip-path: polygon(50% 50%, 75% 100%, 25% 100%, 45% 60%); }
+.slice5 { clip-path: polygon(50% 50%, 25% 100%, 0% 50%, 40% 55%); }
+.slice6 { clip-path: polygon(50% 50%, 0% 50%, 35% 0%, 45% 50%); }
+
+.slice.cut {
+    opacity: 1;
+    transform: translate(40px, -40px) rotate(12deg);
 }
 
-@keyframes floatUp {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-250px); opacity: 0; }
-}
-
+/* Message */
 #message {
     font-size: 22px;
-    margin-top: 15px;
+    margin-top: 10px;
+}
+
+/* Final Birthday Text */
+#finalText {
+    display: none;
+    font-size: 60px;
     font-weight: bold;
+    text-shadow: 0 0 10px #fff,
+                 0 0 20px #ff4d6d,
+                 0 0 40px #ff4d6d;
+    animation: zoomIn 1.5s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Fireworks */
+.firework {
+    position: fixed;
+    font-size: 24px;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    from { transform: scale(0); opacity: 1; }
+    to { transform: scale(2); opacity: 0; }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    #hero { width: 120px; }
-    #gf { width: 170px; }
+    #hero { width: 140px; }
+    #gf { width: 220px; }
     #cake-container {
-        width: 200px;
-        height: 200px;
-        bottom: 160px;
+        width: 220px;
+        height: 220px;
+        bottom: 180px;
     }
+    #finalText { font-size: 36px; }
 }
 </style>
 </head>
@@ -164,16 +180,23 @@ button {
     <div id="cake-container">
         <div id="candle">🕯️</div>
         <div id="knife">🔪</div>
-        <div class="slice slice-rest"></div>
-        <div class="slice slice-main"></div>
+        <div class="cake-base"></div>
+
+        <!-- Cake Slices -->
+        <div class="slice slice1"></div>
+        <div class="slice slice2"></div>
+        <div class="slice slice3"></div>
+        <div class="slice slice4"></div>
+        <div class="slice slice5"></div>
+        <div class="slice slice6"></div>
     </div>
 </div>
 
-<button id="blowBtn" style="display:none;" onclick="blowCandle()">
-    Blow Candle 🕯️
-</button>
+<!-- Controls -->
+<button id="blowBtn" class="btn">Blow Candle 🕯️</button>
 
 <p id="message"></p>
+<h2 id="finalText">🎉 HAPPY BIRTHDAY MY LOVE ❤️🎂</h2>
 
 <script src="script.js"></script>
 
@@ -184,61 +207,85 @@ const cakeContainer = document.getElementById("cake-container");
 const knife = document.getElementById("knife");
 const candle = document.getElementById("candle");
 const message = document.getElementById("message");
+const finalText = document.getElementById("finalText");
 const blowBtn = document.getElementById("blowBtn");
+const slices = document.querySelectorAll(".slice");
 
-let cut = false;
+let currentSlice = 0;
 
-/* Step 1: Hero enters with cake */
+/* Step 1: Hero enters */
 setTimeout(() => {
     hero.classList.add("walk-in");
-}, 300);
+}, 500);
 
-/* Step 2: Girlfriend enters after 1.5 sec */
+/* Step 2: Girlfriend appears after 1.5 sec */
 setTimeout(() => {
     gf.style.display = "block";
-}, 1800);
+}, 2000);
 
 /* Step 3: Cake appears */
 setTimeout(() => {
     cakeContainer.style.display = "block";
     blowBtn.style.display = "inline-block";
     message.innerText = "Blow the candle, my love 💖";
-}, 3000);
+}, 3500);
 
-/* Step 4: Blow Candle */
-function blowCandle() {
+/* Blow Candle Button */
+blowBtn.addEventListener("click", () => {
     candle.style.display = "none";
     blowBtn.style.display = "none";
     message.innerText = "Tap the cake to cut it! 🎂";
-}
+});
 
-/* Step 5: Cut Single Slice */
+/* Cut Cake One Slice at a Time */
 cakeContainer.addEventListener("click", (e) => {
-    if (cut || candle.style.display !== "none") return;
-    cut = true;
+    if (candle.style.display !== "none") return;
+    if (currentSlice >= slices.length) return;
 
     const rect = cakeContainer.getBoundingClientRect();
     knife.style.left = (e.clientX - rect.left - 25) + "px";
     knife.style.top = (e.clientY - rect.top - 25) + "px";
     knife.style.display = "block";
 
-    setTimeout(() => {
-        cakeContainer.classList.add("cut");
-        message.innerText = "Happy Birthday My Love ❤️🎂";
-        launchHearts(40);
-    }, 200);
+    slices[currentSlice].classList.add("cut");
+    currentSlice++;
+
+    if (currentSlice === slices.length) {
+        setTimeout(showCelebration, 800);
+    }
 });
 
-/* Heart Burst */
+/* Celebration Effects */
+function showCelebration() {
+    message.innerText = "Happy Birthday My Love ❤️🎂";
+    finalText.style.display = "block";
+    launchHearts(40);
+    launchFireworks(30);
+}
+
+/* Hearts Animation */
 function launchHearts(count) {
     for (let i = 0; i < count; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "💖";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "0px";
+        heart.style.bottom = "0";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 3000);
+    }
+}
+
+/* Fireworks Animation */
+function launchFireworks(count) {
+    for (let i = 0; i < count; i++) {
+        const fire = document.createElement("div");
+        fire.className = "firework";
+        fire.innerHTML = "✨";
+        fire.style.left = Math.random() * 100 + "vw";
+        fire.style.top = Math.random() * 60 + "vh";
+        document.body.appendChild(fire);
+        setTimeout(() => fire.remove(), 1200);
     }
 }
 </script>
