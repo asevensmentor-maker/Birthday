@@ -1,24 +1,21 @@
-/* Smooth Page Transitions */
 document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("fade-in");
 
-    document.querySelectorAll("a, button[data-link]").forEach(link => {
-        link.addEventListener("click", function (e) {
+    // Smooth navigation
+    document.querySelectorAll("[data-link]").forEach(link => {
+        link.addEventListener("click", function () {
             const target = this.getAttribute("data-link");
-            if (target) {
-                e.preventDefault();
-                document.body.classList.add("fade-out");
-                setTimeout(() => {
-                    window.location.href = target;
-                }, 500);
-            }
+            document.body.classList.add("fade-out");
+            setTimeout(() => {
+                window.location.href = target;
+            }, 500);
         });
     });
 
     startHearts();
 });
 
-/* Heart Rain Effect */
+// Heart Rain Effect
 function startHearts() {
     setInterval(() => {
         const heart = document.createElement("div");
@@ -29,5 +26,5 @@ function startHearts() {
         document.body.appendChild(heart);
 
         setTimeout(() => heart.remove(), 5000);
-    }, 300);
+    }, 400);
 }
