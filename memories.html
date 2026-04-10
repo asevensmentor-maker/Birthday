@@ -129,9 +129,9 @@ typeText(messages[0]);
 setInterval(nextSlide, 6000);
 
 /* FINAL SCREEN */
-function showFinal(){
+function showFinal() {
   document.body.innerHTML = `
-    <div style="margin-top:150px">
+    <div style="margin-top:150px; text-align:center;">
       <h1>❤️ Best Memories With You ❤️</h1>
       <p style="font-size:24px;">
         Every moment with you is my favorite memory 💖<br><br>
@@ -140,8 +140,16 @@ function showFinal(){
 
       <br><br>
 
-      <button data-link="final.html">Final Surprise 🎂</button>
+      <button class="btn" onclick="goFinal()">
+        Final Surprise 🎂
+      </button>
     </div>
+  `;
+}
+
+function goFinal() {
+  window.location.href = "final.html";
+}
   `;
 }
 
