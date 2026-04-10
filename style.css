@@ -90,9 +90,57 @@ img {
     flex-wrap: wrap;
 }
 
+./* Character Styling */
 .character {
-    width: 140px;
-    transition: 0.3s;
+  width: 150px;
+  transition: transform 0.4s ease;
+  position: relative;
+}
+
+/* Attack Animations */
+.attack-left {
+  transform: translateX(120px) scale(1.1);
+  z-index: 2;
+}
+
+.attack-right {
+  transform: translateX(-120px) scale(1.1);
+  z-index: 2;
+}
+
+/* Hit Effect */
+.hit {
+  transform: scale(0.85);
+  filter: brightness(0.7);
+}
+
+/* Victory Dance */
+#victoryDance {
+  display: none;
+  width: 200px;
+  margin-top: 20px;
+  animation: dance 0.8s infinite alternate;
+}
+
+@keyframes dance {
+  from { transform: translateY(0) rotate(-5deg); }
+  to { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .character {
+    width: 110px;
+  }
+
+  .attack-left {
+    transform: translateX(70px) scale(1.1);
+  }
+
+  .attack-right {
+    transform: translateX(-70px) scale(1.1);
+  }
+}
 }
 
 .bar {
