@@ -1,80 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Birthday My Love 🎂</title>
+<title>Happy Birthday ❤️</title>
 
 <style>
 body {
   margin:0;
-  background: linear-gradient(#ff758c, #ff7eb3);
-  color:white;
-  text-align:center;
+  background:#ff6f91;
   font-family: Arial;
+  text-align:center;
   overflow:hidden;
+  color:white;
+}
+
+/* TITLE */
+h1 {
+  margin-top:20px;
+}
+
+/* CENTER AREA */
+.scene {
+  position:relative;
+  height:70vh;
 }
 
 /* AVATARS */
 .avatar {
-  width:140px;
+  width:120px;
   position:absolute;
-  bottom:100px;
+  bottom:0;
 }
 
-/* WALK */
-#you { left:-200px; animation: walkYou 4s forwards; }
-#gf { right:-200px; display:none; animation: walkGF 4s forwards; }
+/* YOU WALK */
+#you {
+  left:-150px;
+  animation: walkYou 3s forwards;
+}
+
+/* GF WALK */
+#gf {
+  right:-150px;
+  display:none;
+  animation: walkGF 3s forwards;
+}
+
+/* STITCH */
+#stitch {
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  animation: dance 0.5s infinite alternate;
+}
 
 /* CAKE */
 #cake {
-  width:200px;
-  margin-top:100px;
+  width:150px;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:120px;
   display:none;
-  transition: all 0.5s;
 }
 
 /* CANDLE */
 #candle {
   position:absolute;
-  top:120px;
   left:50%;
   transform:translateX(-50%);
-  font-size:30px;
-}
-
-/* BLOW EFFECT */
-.blown {
-  opacity:0;
-}
-
-/* SLICE */
-.slice {
-  transform: rotate(-15deg) scale(0.9);
+  bottom:200px;
+  font-size:25px;
+  display:none;
 }
 
 /* BUTTON */
 button {
-  padding:12px 20px;
+  padding:10px 15px;
   border:none;
-  border-radius:25px;
-  margin:10px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-/* WISH BOX */
-#wishBox {
-  display:none;
-  margin-top:20px;
-}
-
-input {
-  padding:10px;
   border-radius:20px;
-  border:none;
-  width:200px;
+  margin:10px;
+  font-size:14px;
 }
 
-/* HEARTS */
+/* ANIMATIONS */
+@keyframes walkYou {
+  to { left:20%; }
+}
+
+@keyframes walkGF {
+  to { right:20%; }
+}
+
+@keyframes dance {
+  from { transform: translateX(-50%) rotate(-5deg); }
+  to { transform: translateX(-50%) rotate(5deg); }
+}
+
+/* HEART */
 .heart {
   position:absolute;
   font-size:20px;
@@ -82,13 +103,9 @@ input {
 }
 
 @keyframes float {
-  0% { transform: translateY(0); opacity:1; }
-  100% { transform: translateY(-200px); opacity:0; }
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); opacity:0; }
 }
-
-/* WALK ANIMATIONS */
-@keyframes walkYou { to { left:30%; } }
-@keyframes walkGF { to { right:30%; } }
 </style>
 
 </head>
@@ -97,94 +114,75 @@ input {
 
 <h1>🎉 Happy Birthday My Love ❤️ 🎉</h1>
 
-<audio autoplay loop>
-  <source src="birthday.mp3">
-</audio>
+<div class="scene">
 
-<!-- AVATARS -->
-<img id="you" src="standing.png" class="avatar">
-<img id="gf" src="gf.png" class="avatar">
+  <!-- YOU -->
+  <img id="you" src="standing.png" class="avatar">
 
-<!-- CAKE -->
-<img id="cake" src="cake.png">
-<div id="candle">🕯️</div>
+  <!-- GF -->
+  <img id="gf" src="gf.png" class="avatar">
 
-<br>
+  <!-- STITCH -->
+  <img id="stitch" src="stitch.png" class="avatar">
 
-<button id="blowBtn" onclick="blowCandle()" style="display:none;">
-  Blow Candle 🕯️
-</button>
+  <!-- CAKE -->
+  <img id="cake" src="cake.png">
 
-<div id="wishBox">
-  <p>Make a wish 💖</p>
-  <input type="text" id="wishInput" placeholder="Type your wish...">
-  <br>
-  <button onclick="saveWish()">Done ✨</button>
+  <!-- CANDLE -->
+  <div id="candle">🕯️</div>
+
 </div>
 
-<button id="cutBtn" onclick="cutCake()" style="display:none;">
-  Cut Cake 🎂
-</button>
+<!-- BUTTONS -->
+<div id="controls">
+  <button id="blowBtn" onclick="blow()">Blow Candle 🕯️</button>
+  <button id="cutBtn" onclick="cut()" style="display:none;">Cut Cake 🎂</button>
+</div>
 
 <p id="msg"></p>
 
 <script>
 
-// GF appears
+/* STEP 1: GF APPEAR */
 setTimeout(()=>{
-  document.getElementById("gf").style.display = "block";
-},4000);
+  document.getElementById("gf").style.display="block";
+},3000);
 
-// Show cake
+/* STEP 2: SHOW CAKE */
 setTimeout(()=>{
-  document.getElementById("cake").style.display = "block";
-  document.getElementById("blowBtn").style.display = "inline-block";
-},7000);
+  document.getElementById("cake").style.display="block";
+  document.getElementById("candle").style.display="block";
+},5000);
 
-// BLOW CANDLE
-function blowCandle(){
-  document.getElementById("candle").classList.add("blown");
-  document.getElementById("msg").innerText = "Make a wish 💖";
+/* BLOW CANDLE */
+function blow(){
+  document.getElementById("candle").style.display="none";
+  document.getElementById("msg").innerText="Make a wish 💖";
 
-  document.getElementById("wishBox").style.display = "block";
+  document.getElementById("blowBtn").style.display="none";
+  document.getElementById("cutBtn").style.display="inline-block";
 }
 
-// SAVE WISH
-function saveWish(){
-  const wish = document.getElementById("wishInput").value;
+/* CUT CAKE */
+function cut(){
+  document.getElementById("msg").innerText="Happy Birthday My Love ❤️🎂";
 
-  document.getElementById("msg").innerText =
-    "Your wish: " + wish + " 💖";
-
-  document.getElementById("wishBox").style.display = "none";
-  document.getElementById("cutBtn").style.display = "inline-block";
+  explode();
 }
 
-// CUT CAKE
-function cutCake(){
+/* HEART EXPLOSION */
+function explode(){
+  for(let i=0;i<40;i++){
+    let h=document.createElement("div");
+    h.innerHTML="💖";
+    h.classList.add("heart");
 
-  const cake = document.getElementById("cake");
-  cake.classList.add("slice");
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="100px";
 
-  document.getElementById("msg").innerText =
-    "Happy Birthday My Love ❤️🎂";
+    document.body.appendChild(h);
 
-  celebrate();
-}
-
-// HEART CELEBRATION
-function celebrate(){
-  for(let i=0;i<70;i++){
-    let heart = document.createElement("div");
-    heart.innerHTML = "💖";
-    heart.classList.add("heart");
-
-    heart.style.left = Math.random()*100+"vw";
-    heart.style.top = "60%";
-
-    document.body.appendChild(heart);
-
-    setTimeout(()=>heart.remove(),3000);
+    setTimeout(()=>h.remove(),3000);
   }
 }
 
