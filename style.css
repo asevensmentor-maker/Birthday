@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* ================================
-   GLOBAL STYLES
-================================ */
 * {
     margin: 0;
     padding: 0;
@@ -33,9 +30,6 @@ h1, h2, p {
     margin: 15px 0;
 }
 
-/* ================================
-   BUTTON STYLES
-================================ */
 .btn {
     background: linear-gradient(45deg, #ff4d6d, #ff85a2);
     border: none;
@@ -53,16 +47,9 @@ h1, h2, p {
     transform: scale(1.05);
 }
 
-/* ================================
-   FADE ANIMATIONS
-================================ */
-.fade-in {
-    animation: fadeIn 1s ease-in-out;
-}
-
-.fade-out {
-    animation: fadeOut 0.5s ease-in-out forwards;
-}
+/* Fade Animations */
+.fade-in { animation: fadeIn 1s ease-in-out; }
+.fade-out { animation: fadeOut 0.5s ease-in-out forwards; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
@@ -73,9 +60,7 @@ h1, h2, p {
     to { opacity: 0; }
 }
 
-/* ================================
-   HEART RAIN EFFECT
-================================ */
+/* Heart Rain */
 .heart {
     position: fixed;
     top: -10px;
@@ -92,9 +77,7 @@ h1, h2, p {
     }
 }
 
-/* ================================
-   FIGHT GAME STYLES
-================================ */
+/* Fight Game */
 .game {
     display: flex;
     justify-content: space-around;
@@ -102,18 +85,10 @@ h1, h2, p {
     flex-wrap: wrap;
 }
 
-.character {
-    width: 140px;
-    transition: transform 0.3s;
-}
+.character { width: 140px; }
 
-.attack-left {
-    transform: translateX(80px) scale(1.1);
-}
-
-.attack-right {
-    transform: translateX(-80px) scale(1.1);
-}
+.attack-left { transform: translateX(80px) scale(1.1); }
+.attack-right { transform: translateX(-80px) scale(1.1); }
 
 .hit {
     transform: scale(0.85);
@@ -134,50 +109,32 @@ h1, h2, p {
     border-radius: 10px;
 }
 
-/* ================================
-   FINAL BIRTHDAY PAGE STYLES
-================================ */
-
-/* Scene Layout */
+/* Final Page */
 .scene {
     position: relative;
     min-height: 80vh;
 }
 
-/* Avatar Defaults */
 .avatar {
-    max-width: 160px;
-}
-
-/* Override for Final Page */
-#hero, #gf {
-    max-width: none;
     position: absolute;
     bottom: 0;
 }
 
-/* Hero Avatar */
 #hero {
     width: 200px;
     left: -40%;
     transition: left 1.5s ease-in-out;
-    z-index: 2;
 }
 
-.walk-in {
-    left: 10%;
-}
+.walk-in { left: 10%; }
 
-/* Girlfriend Avatar */
 #gf {
     width: 300px;
     left: 50%;
     transform: translateX(-50%);
     display: none;
-    z-index: 2;
 }
 
-/* Cake Container */
 #cake-container {
     position: absolute;
     width: 300px;
@@ -187,47 +144,17 @@ h1, h2, p {
     bottom: 220px;
     display: none;
     cursor: pointer;
-    z-index: 1;
 }
 
-/* Whole Cake */
-.cake-base {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
-}
-
-/* Candle */
-#candle {
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 32px;
-}
-
-/* Blow Candle Button */
-#blowBtn {
-    display: none;
-}
-
-/* Knife */
-#knife {
-    position: absolute;
-    font-size: 50px;
-    display: none;
-    pointer-events: none;
-    transform: rotate(-45deg);
-    z-index: 10;
-}
-
-/* Cake Slices */
+.cake-base,
 .slice {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url('cake2.png') center/cover no-repeat;
+    background: url('cake2.png') center/contain no-repeat;
+}
+
+.slice {
     opacity: 0;
     transition: transform 0.6s ease, opacity 0.6s ease;
 }
@@ -244,69 +171,30 @@ h1, h2, p {
     transform: translate(40px, -40px) rotate(12deg);
 }
 
-/* Firework Effect */
-.firework {
-    position: fixed;
-    font-size: 24px;
-    animation: explode 1.2s ease-out forwards;
-    z-index: 999;
+#knife {
+    position: absolute;
+    font-size: 50px;
+    display: none;
 }
 
-@keyframes explode {
-    from {
-        transform: scale(0);
-        opacity: 1;
-    }
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
+#candle {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
 }
 
-/* Final Birthday Message */
 #finalText {
     display: none;
-    font-size: 60px;
+    font-size: 50px;
     font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 10px #fff,
-                 0 0 20px #ff4081,
-                 0 0 40px #ff4081;
-    animation: zoomIn 1.5s ease-in-out forwards;
 }
 
-@keyframes zoomIn {
-    from {
-        transform: scale(0);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* ================================
-   RESPONSIVE DESIGN
-================================ */
+/* Responsive */
 @media (max-width: 768px) {
-    .character { width: 100px; }
-    .avatar { max-width: 120px; }
-
     #hero { width: 140px; }
     #gf { width: 200px; }
-
-    #cake-container {
-        width: 220px;
-        height: 220px;
-        bottom: 180px;
-    }
-
-    #finalText {
-        font-size: 36px;
-    }
-
-    h1 {
-        font-size: 22px;
-    }
+    #cake-container { width: 220px; height: 220px; bottom: 180px; }
+    #finalText { font-size: 32px; }
 }
