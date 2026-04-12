@@ -6,20 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", function () {
             const target = this.getAttribute("data-link");
             document.body.classList.add("fade-out");
-            setTimeout(() => {
-                window.location.href = target;
-            }, 500);
+            setTimeout(() => window.location.href = target, 500);
         });
     });
 
     startHearts();
+
+    // Run final page logic only if elements exist
+    initFinalPage();
 });
 
 // Heart Rain
 function startHearts() {
-    if (window.heartInterval) return;
-
-    window.heartInterval = setInterval(() => {
+    setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "💖";
@@ -27,86 +26,55 @@ function startHearts() {
         heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
-    }, 400);
+    }, 500);
 }
 
-// Celebration Hearts
-function launchHearts(count = 30) {
-    for (let i = 0; i < count; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = "50%";
-        heart.style.animationDuration = "3s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-    }
-}
-const cakeContainer = document.getElementById("cake-container");
-const slice = document.getElementById("slice1");
-const knife = document.getElementById("knife");
-const candle = document.getElementById("candle");
-const message = document.getElementById("message");
-const finalText = document.getElementById("finalText");
+// Final Page Logic
+function initFinalPage() {
+    const hero = document.getElementById("hero");
+    const gf = document.getElementById("gf");
+    const cakeContainer = document.getElementById("cake-container");
+    const knife = document.getElementById("knife");
+    const candle = document.getElementById("candle");
+    const message = document.getElementById("message");
+    const finalText = document.getElementById("finalText");
+    const blowBtn = document.getElementById("blowBtn");
+    const slices = document.querySelectorAll(".slice");
 
-let sliceCut = false;
+    if (!hero || !gf) return;
 
-/* Show Cake After Story */
-setTimeout(() => {
-    cakeContainer.style.display = "block";
-    message.innerText = "Blow the candle, my love 💖";
-}, 3000);
+    let currentSlice = 0;
 
-/* Blow Candle */
-candle.addEventListener("click", () => {
-    candle.style.display = "none";
-    message.innerText = "Tap the cake to cut it! 🎂";
-});
+    setTimeout(() => hero.classList.add("walk-in"), 500);
+    setTimeout(() => gf.style.display = "block", 2000);
 
-/* Cut Cake Slice */
-cakeContainer.addEventListener("click", (e) => {
-    if (sliceCut || candle.style.display !== "none") return;
+    setTimeout(() => {
+        cakeContainer.style.display = "block";
+        blowBtn.style.display = "inline-block";
+        message.innerText = "Blow the candle, my love 💖";
+    }, 3500);
 
-    const rect = cakeContainer.getBoundingClientRect();
-    knife.style.left = (e.clientX - rect.left - 25) + "px";
-    knife.style.top = (e.clientY - rect.top - 25) + "px";
-    knife.style.display = "block";
+    blowBtn.addEventListener("click", () => {
+        candle.style.display = "none";
+        blowBtn.style.display = "none";
+        message.innerText = "Tap the cake to cut it! 🎂";
+    });
 
-    slice.classList.add("cut");
-    sliceCut = true;
+    cakeContainer.addEventListener("click", (e) => {
+        if (candle.style.display !== "none") return;
+        if (currentSlice >= slices.length) return;
 
-    message.innerText = "Happy Birthday My Love ❤️🎂";
-    launchHearts(40);
-    launchFireworks(25);
+        const rect = cakeContainer.getBoundingClientRect();
+        knife.style.left = (e.clientX - rect.left - 25) + "px";
+        knife.style.top = (e.clientY - rect.top - 25) + "px";
+        knife.style.display = "block";
 
-    if (finalText) {
-        finalText.style.display = "block";
-    }
-});
+        slices[currentSlice].classList.add("cut");
+        currentSlice++;
 
-/* Hearts Animation */
-function launchHearts(count) {
-    for (let i = 0; i < count; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.bottom = "0";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-    }
-}
-
-/* Fireworks Animation */
-function launchFireworks(count) {
-    for (let i = 0; i < count; i++) {
-        const fire = document.createElement("div");
-        fire.className = "firework";
-        fire.innerHTML = "✨";
-        fire.style.left = Math.random() * 100 + "vw";
-        fire.style.top = Math.random() * 60 + "vh";
-        document.body.appendChild(fire);
-        setTimeout(() => fire.remove(), 1200);
-    }
+        if (currentSlice === slices.length) {
+            message.innerText = "Happy Birthday My Love ❤️🎂";
+            finalText.style.display = "block";
+        }
+    });
 }
